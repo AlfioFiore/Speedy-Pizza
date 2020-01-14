@@ -13,6 +13,8 @@
 	
 	<div class="container-fluid">
 	<%@ include file = "headerGestore.jsp" %>
+	<%@ include file = "components/modals.jsp" %>
+	
 		<div id="contenutoPagina">
 		<div class="row">
 		

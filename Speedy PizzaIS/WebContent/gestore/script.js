@@ -70,7 +70,37 @@ function rifiutaRichiesta(id){
 		}
 	});	
 }
-
+function visualizzaModalAggiungiFattorino(){
+	$('#modalAggiungiFattorino').modal('show');
+}
+function aggiungiFattorino(){
+	var utente={
+			nome : $("#nomeFatt").val(),
+			cognome:$("#cognomeFatt").val(),
+			email:$("#emailFatt").val(),
+			password : $("#passwordFatt").val(),
+			telefono:$("#telefonoFatt").val(),
+			tipo: 2
+	};
+	$.ajax({
+		url : '../ManagerFattorinoServlet',
+		type: "POST",
+		data : {
+			
+			method : 'aggiungiFattorino',
+			fattorino : JSON.stringify(utente)
+			
+		},
+		success : function() {
+			alert("aggiunto");			
+			$("#modalAggiungiFattorino").modal('hide');
+			visualizzaFattorini()
+		},
+		error: function() {
+			alert("impossibile aggiungere");
+		}
+	});	
+}
 
 
 
