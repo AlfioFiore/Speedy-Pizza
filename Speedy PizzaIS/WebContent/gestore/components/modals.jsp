@@ -1,3 +1,12 @@
+<%@page import="model.daoFactory.PizzeriaDAOFactory"%>
+<%@page import="model.beans.Pizzeria"%>
+<%@page import="java.util.Set"%>
+
+<%
+	Set<Pizzeria> pizzerie = (Set<Pizzeria>) PizzeriaDAOFactory.getPizzeriaDAO().getPizzerie();
+%>
+
+
 <div class="modal fade padding" id="modalAggiungiFattorino" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<form id="formAggiungiFatt" onsubmit="aggiungiFattorino(); return false">
@@ -11,9 +20,16 @@
 			
 					<div class="form-group">
 						<label for="nomeRist">Ristorante</label>
-						<select>
-							<option disabled selected value></option>
-							<option value = "prova">Prova</option>
+						<select id="elencoPizzerie">
+							<%
+								for(Pizzeria p:pizzerie){
+							%>
+							<option disabled selected value>Scegli pizzeria</option>
+							<option value = <%= p.getPartitaIva() %>><%= p.getNome() %></option>
+							<%
+								}
+							%>
+							
 						</select>
 					</div>
 					<div class="form-group">

@@ -74,6 +74,7 @@ function visualizzaModalAggiungiFattorino(){
 	$('#modalAggiungiFattorino').modal('show');
 }
 function aggiungiFattorino(){
+		
 	var utente={
 			nome : $("#nomeFatt").val(),
 			cognome:$("#cognomeFatt").val(),
@@ -88,13 +89,14 @@ function aggiungiFattorino(){
 		data : {
 			
 			method : 'aggiungiFattorino',
-			fattorino : JSON.stringify(utente)
+			fattorino : JSON.stringify(utente),
+			pizzeria : $("#elencoPizzerie :selected").val()
 			
 		},
 		success : function() {
 			alert("aggiunto");			
 			$("#modalAggiungiFattorino").modal('hide');
-			visualizzaFattorini()
+			mostraUtenti()
 		},
 		error: function() {
 			alert("impossibile aggiungere");

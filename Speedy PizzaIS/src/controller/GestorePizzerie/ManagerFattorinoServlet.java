@@ -58,10 +58,20 @@ public class ManagerFattorinoServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 		}else if (request.getParameter("method") != null && request.getParameter("method").equals("aggiungiFattorino")) {
+			String partitaIva = "";
+			
 			Pizzeria pizzeria = (Pizzeria)request.getSession().getAttribute("pizzeria");
+			
+			if(pizzeria == null) {
+				partitaIva = request.getParameter("pizzeria");
+			}else {
+				partitaIva = pizzeria.getPartitaIva();
+			}
+			
 			Gson gson = new Gson();
 			Utente utente = gson.fromJson(request.getParameter("fattorino"), Utente.class);
-			utente.setPizzeriaFattorino(pizzeria.getPartitaIva());
+			utente.setPizzeriaFattorino(partitaIva);
+			
 			if(UtenteDAOFactory.getUtenteDAO().inserisciUtente(utente)!=null) {
 				response.setStatus(HttpServletResponse.SC_OK);
 			}else {
