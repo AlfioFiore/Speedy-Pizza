@@ -1,0 +1,313 @@
+
+@font-face {
+	src: url("Trincha.ttf");
+	font-family: Trincha;
+}
+body {
+    font-family: Trincha;
+	font-size: 1.5em;
+	background-color: rgba(242, 195, 55, 0.8);
+}
+a{
+	color: green;
+	transition: 0.5s color;
+}
+hedaer {
+	height: 10vh;
+}
+footer {
+	padding-top: 2vh;
+	padding-bottom: 2vh;
+	text-align: center;
+	
+}
+.change {
+	display: none;
+}
+.change-active {
+	display: block;
+}
+
+	.padding{
+		padding-left: 20% !important;
+	}
+.menubar {
+	background-color: #333333 !important;
+	margin-bottom: 3vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.nav-link {
+	color: #F2C337 !important;
+}
+.nav-item {
+	margin-right: 5vw;
+}
+.nav-link:hover {
+	color: rgba(6, 150, 52, 0.73) !important;
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(242, 195, 55, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+}
+.navbar-text  {
+	color: #F2C337 !important;
+}
+.row {
+	margin-right: 0px; 
+	margin-left: 0px;
+}
+#div-recensioni-interno{
+	color: #F2C337; 
+	max-height: 50vh; 
+	align-items: center; 
+	text-align: center;
+}
+#div-recensioni {	
+	padding-left: 0px;
+	padding-right: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#div-slider {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.div-ordinazione-ora {
+	background-color: #333333;
+	color: #F2C337;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.div-ordinazione-ora-interno {
+	align-items: center; 
+	text-align: center;
+	
+}
+.input-bordered {
+	border: 2px solid green;
+	background-color: transparent;
+	color: #F2C337;
+	font-size: 1.1em;
+	text-align: center;
+	font-weight: bold;
+	width: 40vw;
+	margin: auto;
+}
+.btn-prosegui {
+	margin-top: 2vh;
+	font-size: 1.2em;
+	margin-bottom: 3vh;
+	border: 2px solid green;
+}
+.motivazioni {
+	padding-top: 2vh;
+	color: #F2C337;
+	background-color: #333333;
+	padding-bottom: 2vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.motivazioni div {
+	text-align: center;
+}
+.el-preferenza {
+	align-items: center; 
+	text-align: center;
+	padding-top: 2vh;
+}
+#vantaggiose-offerte {
+	border-left: 4px solid #F2C337;
+	border-right: 4px solid #F2C337;
+}
+.div-mappa {
+	padding-top: 2vh;
+	padding-bottom: 2vh;
+	padding-left: 2vw;
+	padding-right: 2vw;
+	
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	background-color: #333333;
+	color: #F2C337;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.div-mappa h1 {
+	padding-bottom: 1vh;
+	align-items: center; 
+	text-align: center;
+}
+.modal-content {
+	background-color: #F2C337;
+}
+.div-tracker {
+	background-color: #333333;
+	color: #F2C337;
+	text-align: center;
+	padding-top: 10vh;
+	padding-bottom: 10vh;
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.div-settings {
+	background-color: #333333;
+	color: #F2C337;
+	text-align: center;
+	padding-top: 2vh;
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.div-order {
+	background-color: #333333;
+	color: #F2C337;
+	text-align: center;
+	padding-top: 4vh;
+	padding-bottom: 10vh;
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.input-ordine {
+	width: 50vw;
+	margin: auto;
+}
+.btn-controlla-stato {
+	width: 50vw;
+	margin: auto;
+	margin-top: 2vh;
+	font-size: 1.2em;
+}
+.div-presentazione {
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.div-registrazione {
+	background-color: #333333;
+	color: #F2C337;
+	text-align: center;
+	padding-top: 10vh;
+	padding-bottom: 10vh;
+	margin-bottom: 2vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.table-reg {
+	width: 80vw;
+	margin: auto;
+	color: #F2C337;
+}
+.table-reg td {
+	font-size: 1.2em;
+}
+.form-reg {
+	width: 20vw;
+}
+.list-group-item:hover {
+	background-color: #F2C337 !important;
+	color: #333333 !important;
+	cursor: pointer;
+	transition: all 0.5s !important;
+}
+
+.card-interna{
+	box-shadow:0px 5px 15px 0px rgb(0, 0, 0,1);
+	border:2px solid green !important;
+	border-radius: 5px;
+}
+
+.card-interna:hover{
+	transform:scale(1.03);
+}
+.product-selected {
+	background-color: green; 
+	color: #333333;
+}
+.card-body {
+	transtion: all 0.5s !important;
+}
+.row{
+margin-right:0;
+margin-left:0;}
+
+.product-row{background-color: white;
+border-radius: 10px;
+margin-bottom:10px;
+opacity: 1;
+transition: all 0.6s ease-out;
+-webkit-transition: all 0.6s ease-out;
+  -moz-transition: all 0.6s ease-out;
+  -o-transition: all 0.6s ease-out;
+  box-shadow:0px 5px 15px 0px rgb(0, 0, 0,1);
+  }
+  
+.product-row:hover{
+	opacity: 0.75;
+	background-color: #f5f5f5; 
+	transform:scale(1.009);
+	box-shadow:0px 8px 5px 0px rgb(0, 0, 0,0.8);
+}
+
+
+.material-icons{
+	vertical-align:middle !important; 
+	cursor:pointer;
+}
+.material-cart{
+	padding:10px; 
+	opacity: 1;
+}
+#add-cart{
+	color:green;
+}
+.material-cart:hover{
+	opacity: 0.75;
+}
+#remove-cart{
+	color:red;
+}
+#delete-cart{
+	color:black;
+}
+
+.checkout-col{
+	padding-right:0 !important;
+}
+.btn-checkout{
+	transition:all 0.6s cubic-bezier(0.56, 1.63, 0.45, 1.5);
+	-webkit-transition: all 0.6s cubic-bezier(0.56, 1.63, 0.45, 1.5);
+  	-moz-transition: all 0.6s cubic-bezier(0.56, 1.63, 0.45, 1.5);
+  	-o-transition:all 0.6s cubic-bezier(0.56, 1.63, 0.45, 1.5);
+	float:right;
+}
+.checkout-row {
+	background-color: #333333;
+    border-radius: 10px;
+}
+@media screen and (min-width: 100px) and (max-width: 1240px) {
+	#vantaggiose-offerte {
+		border-left: 0px;
+		border-right: 0px;
+		margin-top: 4px ;
+		margin-bottom: 4px ;
+	}
+}
+@media screen and (min-width: 1240px) {
+	#vantaggiose-offerte {
+		margin-left: 4px; 
+		margin-right: 4px;
+	}
+}
+
+@media screen and (min-width: 990px) {
+	#first-item {
+		margin-left: 5vw;
+	}
+}
