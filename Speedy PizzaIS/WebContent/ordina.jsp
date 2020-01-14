@@ -4,13 +4,10 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="style/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 </head>
-
 <body>
-
-	<!-- CODICE ORIGINE
 	<%@ include file = "modals.html" %>
 	<div class="container-fluid">
 	<%@ include file = "header.jsp" %>
@@ -88,71 +85,6 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="script.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9xlq0bGvWJWELWto7CkZhASL_skg-uzM&libraries=places&callback=initAutocomplete"
-        async defer></script> -->
-
-
-	<!-- CODICE CON BING -->
-	<%@ include file = "modals.html" %>
-	<div class="container-fluid">
-	<%@ include file = "header.jsp" %>
-		<div id="contenutoPagina">
-			<div class="row div-order">
-				<div class="col-xl-12">
-					<h2>Dove dobbiamo consegnare?</h2>
-				</div>
-				<div class="col-md-12">
-					 <div id='printoutPanel'></div>
-        			 <div id='searchBoxContainer'><input type= 'text' id= 'searchBox'/></div>
-        
-        			 <div id='myMap' style='height: 60vh; margin:0px auto; margin-top: 1em;'></div>
-					
-				</div>
-				<div class="col-md-12" id="lista-pizzerie">
-				
-				</div>
-				
-			</div>
-			<input type="hidden" id="nomePizzeria" value=""/>
-			
-		</div>
-	<%@ include file = "footer.jsp" %>
-	</div>
-	
-	 <script type='text/javascript'>
-            function loadMapScenario() {
-                var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-                    /* No need to set credentials if already passed in URL */
-        			center: new Microsoft.Maps.Location(40.8401, 14.2523),
-                    zoom: 12
-                	});
-                Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
-                    var options = {
-                        maxResults: 4,
-                        map: map
-                    };
-                    var manager = new Microsoft.Maps.AutosuggestManager(options);
-                    manager.attachAutosuggest('#searchBox', '#searchBoxContainer', selectedSuggestion);
-                	});
-                function selectedSuggestion(suggestionResult) {
-                    map.entities.clear();
-                    map.setView({ bounds: suggestionResult.bestView });
-                    var pushpin = new Microsoft.Maps.Pushpin(suggestionResult.location);
-                    map.entities.push(pushpin);
-                    document.getElementById('printoutPanel').innerHTML =
-                        'HAI CERCATO: ' + suggestionResult.formattedSuggestion +
-                            '<br> Lat: ' + suggestionResult.location.latitude +
-                            '<br> Lon: ' + suggestionResult.location.longitude;
-                }   
-            }
-        </script>
-        
-        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Amy2qglVXcIC68quaEoiMAGwsR4dpocUwj-h3l83Q2uB1nETxJADURr9snVrrXyc&callback=loadMapScenario' async defer></script>  
-	
-	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="script.js"></script>
-	
-	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9xlq0bGvWJWELWto7CkZhASL_skg-uzM&libraries=places&callback=initAutocomplete"></script>  -->
+        async defer></script>	
 </body>
 </html>
