@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.mysql.cj.protocol.Resultset;
-
 import model.DriverManagerConnectionPool;
 import model.beans.RichiestaAffiliazione;
 import model.daoInterface.RichiestaAffiliazioneDAO;

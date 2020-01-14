@@ -10,6 +10,13 @@
 				</div>
 			
 					<div class="form-group">
+						<label for="nomeRist">Ristorante</label>
+						<select>
+							<option disabled selected value></option>
+							<option value = "prova">Prova</option>
+						</select>
+					</div>
+					<div class="form-group">
 						<label for="nomeFatt">Nome</label>
 						<input type="text" class="form-control" id="nomeFatt" aria-describedby="emailHelp"/>
 						
