@@ -382,8 +382,10 @@ function showProductOfRestaurant(partitaIva, nome) {
 }
 
 function showProductOfCategory(what) {
+	
 	var nome = $("#nomePizzeria").html();
 	var namePizz = nome + " - " + what;
+	
 	$.ajax({
 		url : 'CatalogoServlet',
 		type: "POST",
@@ -392,12 +394,12 @@ function showProductOfCategory(what) {
 			categoria : what
 		},
 		success : function(result) {
-			alert(result)
-			var iva = result[0].idRistorante;
+			
+			var iva = result[0].idPizzeria;
 			var toPrint ="<div onclick=\"showProductOfRestaurant('"+iva+"','"+nome+"');\" class=\"col\"><i class='material-icons'>arrow_back</i></div><div class=\"col-10\"><h3 id=\"nomePizzeria\"></h3></div><div class=\"col-xl-12\">";
 			for (x in result) {
 				y = parseInt(x) + 1;
-				toPrint+= "<div onclick=\"addProduct('"+result[x].p+"', '');\" class=\"col-md-3\" style=\"padding-top: 2vh;\"><div class=\"card card-interna\"><div class=\"card-body\" style='font-size: 1.2em;'>"+ result[x].p +"<br><span style='font-size: 1.5em;'>" + result[x].price + "</span> <i class='material-icons'>euro_symbol</i>" +"</div></div></div>";	
+				toPrint+= "<div onclick=\"addProduct('"+result[x].nome+"', '');\" class=\"col-md-3\" style=\"padding-top: 2vh;\"><div class=\"card card-interna\"><div class=\"card-body\" style='font-size: 1.2em;'>"+ result[x].nome +"<br><span style='font-size: 1.5em;'>" + result[x].prezzo + "</span> <i class='material-icons'>euro_symbol</i>" +"</div></div></div>";	
 			}
 			$(".div-order").hide().html(toPrint).fadeIn('500');
 			$("#nomePizzeria").hide().html(namePizz).fadeIn('500');

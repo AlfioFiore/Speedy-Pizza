@@ -131,10 +131,12 @@ public class CatalogoServlet extends HttpServlet {
 			String partitaIva =(String) request.getSession().getAttribute("ristoranteScelto");
 			String categoria = request.getParameter("categoria");
 			ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>)ProdottoDAOFactory.getProdottoDAO().getProdottiByCategoria(partitaIva, categoria);
+			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
+			System.out.println(new Gson().toJson(prodotti) );
 			response.getWriter().write(new Gson().toJson(prodotti));
-			response.getWriter().write(partitaIva);
+			
 			response.setStatus(HttpServletResponse.SC_OK);
 
 		}else {
