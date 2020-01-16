@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 import com.sun.swing.internal.plaf.synth.resources.synth;
 
 import model.DriverManagerConnectionPool;
@@ -166,9 +168,9 @@ public class ProdottoDAOImpl implements ProdottoDAO {
 	}
 
 	@Override
-	public Set<Prodotto> getProdottiByCategoria(String idPizzeria, String idCategoria) {
+	public ArrayList<Prodotto> getProdottiByCategoria(String idPizzeria, String idCategoria) {
 		Connection connection = null;
-		Set<Prodotto> prodotti = null;
+		ArrayList<Prodotto> prodotti = null;
 		ResultSet result = null;
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -179,7 +181,7 @@ public class ProdottoDAOImpl implements ProdottoDAO {
 			statement.setString(2, idPizzeria);
 			result = statement.executeQuery();
 			if (result!=null) {
-				prodotti = new HashSet<Prodotto>();
+				prodotti = new ArrayList<Prodotto>();
 				while(result.next()) {
 					Prodotto p = new Prodotto();
 					p.setNome(result.getString(1));
