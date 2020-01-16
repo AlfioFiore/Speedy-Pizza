@@ -48,17 +48,17 @@ public class OrdineServlet extends HttpServlet {
 		}
 		
 	}else if(request.getParameter("method") != null && request.getParameter("method").equals("setAddress")) {
-		int id = Integer.parseInt((String)request.getAttribute("ind"));
-		System.out.println(id);
-		/*Indirizzo indirizzo = IndirizzoDAOFactory.getIndirizzoDAO().getIndirizzoById(idIndirizzo);
+		int id = Integer.parseInt((String)request.getParameter("ind"));
+		Indirizzo indirizzo = IndirizzoDAOFactory.getIndirizzoDAO().getIndirizzoById(id);
 		request.getSession().setAttribute("indirizzoScelto", indirizzo);
-		response.setStatus(HttpServletResponse.SC_OK);*/
+		response.setStatus(HttpServletResponse.SC_OK);
 	}else if(request.getParameter("method") != null && request.getParameter("method").equals("setPaymentMethod")) {
-		String numeroCarta= (String) request.getAttribute("carta");
-		System.out.println(numeroCarta);
+		String numeroCarta= (String) request.getParameter("carta");
 		Carta carta = CartaDAOFactory.getCartaDAO().getCartaByNumero(numeroCarta);
 		request.getSession().setAttribute("cartaScelta", carta);
 		response.setStatus(HttpServletResponse.SC_OK);
+	}else if(request.getParameter("method") != null && request.getParameter("method").equals("confirmOrder")) {
+
 	}else {
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}

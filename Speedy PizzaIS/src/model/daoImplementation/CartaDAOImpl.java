@@ -116,8 +116,8 @@ public class CartaDAOImpl implements CartaDAO{
 			while (result.next()){
 				carta = new Carta();
 				carta.setCvc(result.getString(3));
-				carta.setIntestatario(result.getNString(4));
-				carta.setNumeroCarta(result.getNString(1));
+				carta.setIntestatario(result.getString(4));
+				carta.setNumeroCarta(result.getString(1));
 				carta.setScadenza(result.getString(2));
 				carta.setUtente(CartaDAOImpl.getUtente(result.getString(5)));
 			}
@@ -144,7 +144,7 @@ public class CartaDAOImpl implements CartaDAO{
 			preparedStatement.setString(1, idCliente);
 			
 			result = preparedStatement.executeQuery();
-			if(result != null) {
+			while(result.next()) {
 				utente = new Utente();
 				utente.setNome(result.getString(1));
 				utente.setCognome(result.getString(2));

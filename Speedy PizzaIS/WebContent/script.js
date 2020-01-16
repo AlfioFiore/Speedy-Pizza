@@ -539,14 +539,14 @@ function setPaymentMethod(which) {
 }
 
 function setAddress(which) {
-	alert(which)
+	
 	$.ajax({
 		url : 'OrdineServlet',
 		type: "POST",
 		data : {
 			
 			method : 'setAddress',
-			ind : which + " "
+			ind : which
 		},
 		success : function(result) {
 			$(".indirizzo").removeClass("product-selected");
@@ -557,7 +557,7 @@ function setAddress(which) {
 
 function confermaOrdine() {
 	$.ajax({
-		url : 'OrderServlet',
+		url : 'OrdineServlet',
 		type: "POST",
 		data : {
 			method : 'confirmOrder'
