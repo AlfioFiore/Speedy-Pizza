@@ -98,12 +98,14 @@ public class OrdineDAOImpl implements OrdineDAO {
 	public synchronized Ordine inserisciOrdine(Ordine ordine) {
 		System.out.println("nel metodo");
 		Connection connection = null;
+		
 		boolean flag1=false;
 		try {
 			System.out.println("dopo try");
 			connection = DriverManagerConnectionPool.getConnection();
 			System.out.println("dopo connection");
 			PreparedStatement statement = connection.prepareStatement(OrdineDAOImpl.INSERT_ORDINE);
+			statement.execute("SET FOREIGN_KEY_CHECKS=0");
 			System.out.println("dopo statement");
 			statement.setInt(1, ordine.getTipoPagamento());
 			statement.setString(2, ordine.getStato());
