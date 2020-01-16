@@ -134,7 +134,6 @@ public class CatalogoServlet extends HttpServlet {
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			System.out.println(new Gson().toJson(prodotti) );
 			response.getWriter().write(new Gson().toJson(prodotti));
 			
 			response.setStatus(HttpServletResponse.SC_OK);

@@ -451,28 +451,30 @@ function addProduct(which, from) {
 		url : 'CarrelloServlet',
 		type: "POST",
 		data : {
-			method : 'addProduct',
+			method : 'addProdotto',
 			nomeProdotto : which
 		},
 		success : function(result) {
-			var numProd = result.numProd;
-			$("#numProdInCarrello").hide().html(numProd).fadeIn('500');
-			if (from=="carrello") showCart();
+			
+
+			$("#numProdInCarrello").html(result).fadeIn('100');
+			if(from == 'carrello') showCart()
 		}
 	});
 }
 
 function decreaseProduct(which) {
 	$.ajax({
-		url : 'CartServlet',
+		url : 'CarrelloServlet',
 		type: "POST",
 		data : {
-			method : 'decreaseProduct',
+			method : 'decreaseProdotto',
 			nomeProdotto : which
 		},
 		success : function(result) {
-			var numProd = result.numProd;
-			$("#numProdInCarrello").hide().html(numProd).fadeIn('500');
+			
+			$("#numProdInCarrello").html(result).fadeIn('500');
+			
 			showCart();
 		},
 		error: function(result){
@@ -483,14 +485,13 @@ function decreaseProduct(which) {
 
 function deleteProduct(which) {
 	$.ajax({
-		url : 'CartServlet',
+		url : 'CarrelloServlet',
 		type: "POST",
 		data : {
 			method : 'deleteProduct',
 			nomeProdotto : which
 		},
-		success : function(result) {
-			var numProd = result.numProd;
+		success : function(result) {var numProd = result.numProd;
 			$("#numProdInCarrello").hide().html(numProd).fadeIn('500');
 			showCart();
 		}
@@ -512,41 +513,10 @@ function addCreatedProduct() {
 	});
 }
 function showCart() {
-	$('.navbar-collapse').collapse('hide');
-	$('#contenutoPagina').hide().load('components/divCarrello.jsp', function() {
-		$.ajax({
-			url : 'CartServlet',
-			type: "POST",
-			data : {
-				method : 'showCartProduct'
-			},
-			success : function(result) {
-				$("#spesa").html("Spesa totale: " + result.total + "  &euro;");
-				var toPrint = "";
-				if (result.numProd == "0") $("#contenutoPagina").html('<div class=\"row col-12\" style=\"padding-top: 15px; background-color: #333333; color: #F2C337;\"><p class=\"mx-auto\">Non ci sono prodotti in carrello</p></div>');
-				for (x in result.array) {
-					var nome = result.array[x].productName;
-					var price = result.array[x].price;
-					var qnt = result.array[x].quantity;
-					toPrint += 
-					"<div class=\"row product-row "+nome+"\">"+
-					"<div class=\"col-4 col-md-3 col-lg-3\" id=\"nome\"> <p>"+nome+"</p></div>"+
-					"<div class=\"col-1 col-md-2 col-lg-2\" id=\"quantita\">"+qnt+"</div>"+
-					"<div class=\"col-2 col-md-2 col-lg-2\" id=\"prezzo\">"+price+"</div>"+
-					"<div class=\"col-2 col-md-3 col-lg-3\">"+
-					"<i class=\"material-icons material-cart\" onclick=\"addProduct('"+nome+"', 'carrello');\" id=\"add-cart\">add</i>"+
-					"<i class=\"material-icons material-cart\" id=\"remove-cart\" onclick=\"decreaseProduct('"+nome+"');\" >remove</i>"+
-					"<i class=\"material-icons material-cart\" id=\"delete-cart\" onclick=\"deleteProduct('"+nome+"');\"> delete</i>"+
-					"</div>"+
-					"<div class=\"col-1 col-md-2 col-lg-2\" id=\"totale\">"+qnt*price+" </div>"+
-				"</div>";
-				}
-				$(".row-to-print").html(toPrint);
-				
-			}
-		});
-	}).fadeIn('700');
-};
+	location.href = "carrello.jsp";
+
+}
+		
 
 function checkOut() {
 	$("#contenutoPagina").hide().load('components/divCheckout.jsp').fadeIn('500');
@@ -561,7 +531,7 @@ function setPaymentMethod(which) {
 			card : which
 		},
 		success : function(result) {
-			$(".carta-credito").removeClass("product-selected");
+			$(".carta-crredito").removeClass("product-selected");
 			$("#card-card-"+which).addClass("product-selected");
 		}
 	});

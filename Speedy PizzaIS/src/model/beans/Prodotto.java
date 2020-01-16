@@ -2,6 +2,10 @@ package model.beans;
 
 import java.util.Set;
 
+import com.sun.tools.javac.util.StringUtils;
+
+
+
 public class Prodotto {
 	private Categoria Categoria;
 	private String nome,ingredienti;
@@ -59,5 +63,15 @@ public class Prodotto {
 	public void setCategoria(Categoria categoria) {
 		Categoria = categoria;
 	}
-	
+	@Override
+	public boolean equals(Object obj) {
+		if(this.nome.equals(((Prodotto) obj).getNome())) {
+			return true;
+		}
+		return false;
+	}
+	@Override
+    public int hashCode() {
+        return 1;
+    }
 }

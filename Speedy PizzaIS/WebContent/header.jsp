@@ -52,13 +52,8 @@ if (request.getSession().getAttribute("utente") != null) {
 					}
 					%>
                     <i onclick="showCart();" id="cart-icon" class="material-icons" style="">shopping_cart</i>
-                    <span id="numProdInCarrello" class="badge badge-notify" style=" position:relative; font-weight:100; font-size:1em; top:-10px; left:-13px;">
-                    <% if (request.getSession().getAttribute("carrello") != null) {
-                    	Carrello cart = (Carrello) request.getSession().getAttribute("carrello");
-						%> <%= cart.getProdotti().size()%>
-						<%
-                    }
-                    %>
+                    <span value=0 id="numProdInCarrello" class="badge badge-notify" style=" position:relative; font-weight:100; font-size:1em; top:-10px; left:-13px;">
+                    
        				</span>
 				</span>
 			</div>
