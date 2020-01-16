@@ -26,7 +26,7 @@ public class DriverManagerConnectionPool  {
 		
 		Properties prop = new Properties();
 		prop.setProperty("user", "root");
-		prop.setProperty("password", "toor");
+		prop.setProperty("password", "root");
 		prop.setProperty("useSSL", "false");
 		prop.setProperty("autoReconnect", "true");
 		prop.setProperty("serverTimezone", "Europe/Amsterdam");

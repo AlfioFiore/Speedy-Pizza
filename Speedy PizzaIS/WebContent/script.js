@@ -334,20 +334,18 @@ function deleteAddress(id) {
 
 function retriveByCity() {
 	var citySel = $("#city-selected").val();
-	
 	$.ajax({
-		url : 'InformazioniServlet',
+		url : 'OrderServlet',
 		type: "POST",
 		data : {
-			citta : citySel,
-			method : 'getPizzerieByCitta',
+			city : citySel,
+			method : 'getRestaurantByCity',
 		},
 		success : function(result) {
-			
 			toPrint="<h1>Pizzerie disponibili</h1>";
 			toPrint+="<ul class=\"list-group list-group-flush w-100 ul-settings\" style=\"border-top: 2px solid #F2C337;\">";
 			for (x in result) {
-  				toPrint += "<li onclick=\"showProductOfRestaurant('"+ result[x].partitaIva + "', '"+ result[x].nome+"');\" id=\"accountSettings\" class=\"list-group-item\" style=\"background-color: #333333; border-bottom: 2px solid #F2C337;\">" + result[x].nome + "</li>";
+  				toPrint += "<li onclick=\"showProductOfRestaurant('"+ result[x].partitaIva + "', '"+ result[x].name+"');\" id=\"accountSettings\" class=\"list-group-item\" style=\"background-color: #333333; border-bottom: 2px solid #F2C337;\">" + result[x].name + "</li>";
 			}
 			toPrint += "</ul>";
 			$("#lista-pizzerie").hide().html(toPrint).fadeIn('500');
@@ -355,44 +353,46 @@ function retriveByCity() {
 	});
 }
 
-function showProductOfRestaurant(partitaIva, nome) {
+function showProductOfRestaurant(who, name) {
+	alert("entered")
 	$(".div-order").hide().load('components/divCategoria.jsp', function(){
-		$("#nomePizzeria").html(nome);
+		$("#nomePizzeria").html(name);
 		$.ajax({
-			url : 'CatalogoServlet',
+			url : 'OrderServlet',
 			type: "POST",
 			data : {
-				partita : partitaIva,
-				method : 'getCategorieRistorante',
+				restaurant : who,
+				method : 'getCategoryByRestaurant',
 			},
 			success : function(result) {
 				result.forEach(function(element) {
-					if (element == "Pizze") {
+					if (element == "pizze") {
 						$("#cat-pizze").css('display',  'block');
-					} else if (element == "Dolci") {
+					} else if (element == "dolci") {
 						$("#cat-dolci").css('display',  'block');
-					} else if (element == "Bibite") {
+					} else if (element == "bibite") {
 						$("#cat-bibite").css('display',  'block');
+					} else if (element == "componibili") {
+						$("#cat-componibili").css('display',  'block');
 					}
 				});
-			}
-			
+			},
+			error: alert("errore")
 		});
 	}).fadeIn('500');
 }
 
 function showProductOfCategory(what) {
 	var nome = $("#nomePizzeria").html();
-	var namePizz = nome + " - " + what;
+	var namePizz = $("#nomePizzeria").html() + " - " + what;
 	$.ajax({
-		url : 'CatalogoServlet',
+		url : 'OrderServlet',
 		type: "POST",
 		data : {
-			method : 'getProdottiCategoria',
-			categoria : what
+			method : 'getAllProductForCategory',
+			category : what
 		},
 		success : function(result) {
-			alert(result)
 			var iva = result[0].idRistorante;
 			var toPrint ="<div onclick=\"showProductOfRestaurant('"+iva+"','"+nome+"');\" class=\"col\"><i class='material-icons'>arrow_back</i></div><div class=\"col-10\"><h3 id=\"nomePizzeria\"></h3></div><div class=\"col-xl-12\">";
 			for (x in result) {
@@ -405,6 +405,36 @@ function showProductOfCategory(what) {
 	});
 }
 
+function showProductComponibili() {
+	$(".div-order").hide().load('components/divComponiPizza.jsp', function() {
+		$.ajax({
+			url : 'OrderServlet',
+			type: "POST",
+			data : {
+				method : 'getAllProductForCategory',
+				category : 'componibili'
+			},
+			success : function(result) {
+				toPrint = $("#divSecondoStep").html();
+				for (x in result) {
+					y = parseInt(x) + 1;
+					toPrint += "<div class=\"col-sm-3\">" +
+									"<div onclick=\"selectProduct('"+ result[x].p +"', 'product" + result[x].p + "');\" id=\"product"+result[x].p+"\" class=\"card card-interna card-prodotto\" style=\"transition: all 0.5s;\">" +
+										"<div class=\"card-body\" style='font-size: 1.2em;'>"+
+											 result[x].p + " <br><span style='font-size: 1.5em;'>" + result[x].price + "</span> <i class='material-icons'>euro_symbol</i>" +
+										"</div></div></div>";
+				}
+				$("#divSecondoStep").hide().html(toPrint).fadeIn('500');
+				$(".card-prodotto").on('click', function() {
+					$("#btn-crea-prodotto").css("opacity", '1');
+				});
+				$(".card-principale").on('click', function(){
+					$("#divSecondoStep").css("display", "flex !important");
+				});
+			}
+		});
+	}).fadeIn('500');
+}
 
 function selectProduct(which, where) {
 	$.ajax({

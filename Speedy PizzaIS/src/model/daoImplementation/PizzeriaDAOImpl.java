@@ -24,7 +24,7 @@ public class PizzeriaDAOImpl implements PizzeriaDAO {
 	public static final String INSERT = "insert into pizzeria values(?,?,?,?,?,?,?,?,?,?)";
 	public static final String UPDATE = "update pizzeria set partita_iva = ?, nome = ?, orario_apertura = ?, "
 			+ "orario_chiusura = ?, giorni_apertura = ?, indirizzo = ?, titolare = ?, iban = ?, descrizione = ?, telefono = ? where partita_iva=?";
-	public static final String GET_BY_CITTA = "SELECT * FROM speedypizza.pizzeria inner join speedypizza.indirizzo on pizzeria.indirizzo = indirizzo.id where citta = ?";
+	public static final String GET_BY_CITTA = "SELECT * FROM pizzeria inner join indirizzo on pizzeria.indirizzo = indirizzo.id where citta = ?";
 	public static final String GET_PIZZERIA_BY_TITOLARE = "select * from  pizzeria where titolare = ?";
 	public static final String GET_ALL = "select * from pizzeria inner join indirizzo on pizzeria.indirizzo = indirizzo.id";
 	public static final String GET_FATTORINI="select utente.* from pizzeria inner join utente on pizzeria.partita_iva = utente.pizzeria_fattorino where pizzeria.partita_iva = ?";
@@ -186,33 +186,32 @@ public class PizzeriaDAOImpl implements PizzeriaDAO {
 	}
 
 	@Override
-	public ArrayList<Pizzeria> getPizzerieByCitta(String citta) {
+	public Collection<Pizzeria> getPizzerieByCitta(String citta) {
 		Connection connection = null;
-		ArrayList<Pizzeria> pizzerie = null;
+		Set<Pizzeria> pizzerie = null;
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(PizzeriaDAOImpl.GET_BY_CITTA);
 			statement.setString(1, citta);
 			ResultSet result = statement.executeQuery();
-			pizzerie = new ArrayList<Pizzeria>();
-			while(result.next()) {
-					
-					Pizzeria pizz = new Pizzeria();
-					pizz.setPartitaIva(result.getString(1));
-					pizz.setNome(result.getString(2));
-					pizz.setOrarioApertura(result.getTime(3));
-					pizz.setOrarioChiusura(result.getTime(4));
-					pizz.setGiorniApertura(result.getString(5));
-					pizz.setIndirizzo(new Indirizzo(result.getInt("civico"), result.getInt("id"), result.getString("via"), result.getString("cap"), result.getString("citta"), result.getString("utente")));
-					pizz.setTitolare(PizzeriaDAOImpl.getTitolare(result.getString("titolare")));
-					pizz.setIban(result.getString(8));
-					pizz.setDescrizione(result.getString(9));
-					pizz.setTelefono(result.getString(10));
-					pizz.setProdotti(PizzeriaDAOImpl.getProdotti(result.getString(1)));
-					pizzerie.add(pizz);
-					System.out.println(pizz.getPartitaIva());
-			}
-				
+				if(result != null) {
+					pizzerie = new HashSet<>();
+					while(result.next()) {
+						Pizzeria pizz = new Pizzeria();
+						pizz.setPartitaIva(result.getString(1));
+						pizz.setNome(result.getString(2));
+						pizz.setOrarioApertura(result.getTime(3));
+						pizz.setOrarioChiusura(result.getTime(4));
+						pizz.setGiorniApertura(result.getString(5));
+						pizz.setIndirizzo(new Indirizzo(result.getInt("civico"), result.getInt("id"), result.getString("via"), result.getString("cap"), result.getString("citta"), result.getString("utente")));
+						pizz.setTitolare(PizzeriaDAOImpl.getTitolare(result.getString("titolare")));
+						pizz.setIban(result.getString(8));
+						pizz.setDescrizione(result.getString(9));
+						pizz.setTelefono(result.getString(10));
+						pizz.setProdotti(PizzeriaDAOImpl.getProdotti(result.getString(1)));
+						pizzerie.add(pizz);
+					}
+				}
 			
 			
 		}catch (SQLException e) {

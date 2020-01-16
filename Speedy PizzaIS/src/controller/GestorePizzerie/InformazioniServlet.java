@@ -5,8 +5,6 @@ import java.lang.reflect.Type;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -56,43 +54,28 @@ public class InformazioniServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("method") != null && request.getParameter("method").equals("aggiornaImpostazioni")) {
-			GsonBuilder gsonBuilder = new GsonBuilder();
-			gsonBuilder.registerTypeAdapter(Time.class, new TimeDeserializer());
-			Gson gson = gsonBuilder.create();
-			Pizzeria pizz = gson.fromJson(request.getParameter("pizzeria"), Pizzeria.class);
-			Pizzeria vecchiaPizzeria = (Pizzeria) request.getSession().getAttribute("pizzeria");
-			String vecchiaPartita = vecchiaPizzeria.getPartitaIva();
-			vecchiaPizzeria.setPartitaIva(pizz.getPartitaIva());
-			vecchiaPizzeria.setNome(pizz.getNome());
-			vecchiaPizzeria.setOrarioApertura(pizz.getOrarioApertura());
-			vecchiaPizzeria.setOrarioChiusura(pizz.getOrarioChiusura());
-			vecchiaPizzeria.setGiorniApertura(pizz.getGiorniApertura());
-			vecchiaPizzeria.setIban(pizz.getIban());
-			vecchiaPizzeria.setIndirizzo(pizz.getIndirizzo());
-		
-			Pizzeria pizzeria = PizzeriaDAOFactory.getPizzeriaDAO().updatePizzeria(vecchiaPizzeria,vecchiaPartita);
-			if(pizzeria !=null) {
-				request.getSession().setAttribute("pizzeria", pizzeria);
-				response.setStatus(HttpServletResponse.SC_OK);
-			}else {
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			}
-		}else if (request.getParameter("method") != null && request.getParameter("method").equals("getPizzerieByCitta")) {
-			String citta = request.getParameter("citta");
-			ArrayList<Pizzeria> pizzerie = (ArrayList<Pizzeria>) PizzeriaDAOFactory.getPizzeriaDAO().getPizzerieByCitta(citta);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new Gson().toJson(pizzerie));
-			response.setStatus(HttpServletResponse.SC_OK);
-		}else if (request.getParameter("method") != null && request.getParameter("method").equals("getAllCity")) {
-			ArrayList<String> citta = (ArrayList<String>) IndirizzoDAOFactory.getIndirizzoDAO().getCitta();
-			Gson gson = new Gson();
-			String allCitta = gson.toJson(citta);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(allCitta);
-			response.setStatus(HttpServletResponse.SC_OK);
+			if (request.getParameter("method") != null && request.getParameter("method").equals("aggiornaImpostazioni")) {
+				GsonBuilder gsonBuilder = new GsonBuilder();
+				gsonBuilder.registerTypeAdapter(Time.class, new TimeDeserializer());
+				Gson gson = gsonBuilder.create();
+				Pizzeria pizz = gson.fromJson(request.getParameter("pizzeria"), Pizzeria.class);
+				Pizzeria vecchiaPizzeria = (Pizzeria) request.getSession().getAttribute("pizzeria");
+				String vecchiaPartita = vecchiaPizzeria.getPartitaIva();
+				vecchiaPizzeria.setPartitaIva(pizz.getPartitaIva());
+				vecchiaPizzeria.setNome(pizz.getNome());
+				vecchiaPizzeria.setOrarioApertura(pizz.getOrarioApertura());
+				vecchiaPizzeria.setOrarioChiusura(pizz.getOrarioChiusura());
+				vecchiaPizzeria.setGiorniApertura(pizz.getGiorniApertura());
+				vecchiaPizzeria.setIban(pizz.getIban());
+				vecchiaPizzeria.setIndirizzo(pizz.getIndirizzo());
+			
+				Pizzeria pizzeria = PizzeriaDAOFactory.getPizzeriaDAO().updatePizzeria(vecchiaPizzeria,vecchiaPartita);
+				if(pizzeria !=null) {
+					request.getSession().setAttribute("pizzeria", pizzeria);
+					response.setStatus(HttpServletResponse.SC_OK);
+				}else {
+					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				}
 		}else {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}

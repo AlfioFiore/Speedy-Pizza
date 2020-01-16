@@ -10,7 +10,7 @@ public interface IndirizzoDAO {
 	public boolean eliminaIndirizzo(Indirizzo indirizzo);
 	public Collection<Indirizzo> getIndirizziByCliente(String idCliente);
 	public Indirizzo getIndirizziByPizzeria(String idCliente);
-	public Collection<String> getCitta();
+
 	public boolean updateIndirizzo(Indirizzo indirizzo);
 	
 }
