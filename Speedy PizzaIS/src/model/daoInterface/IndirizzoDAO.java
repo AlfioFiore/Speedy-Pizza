@@ -12,5 +12,5 @@ public interface IndirizzoDAO {
 	public Indirizzo getIndirizziByPizzeria(String idCliente);
 	public Collection<String> getCitta();
 	public boolean updateIndirizzo(Indirizzo indirizzo);
-	
+	public Indirizzo getIndirizzoById(int id);
 }

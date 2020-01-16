@@ -13,6 +13,7 @@
 
 </head>
 <body>
+<%@ include file = "modals.html" %>
 <div class="container-fluid">
 <%@ include file = "header.jsp" %>
 <div id="contenutoPagina">

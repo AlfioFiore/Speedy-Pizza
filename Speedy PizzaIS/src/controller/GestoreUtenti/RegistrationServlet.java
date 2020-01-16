@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import model.beans.Cliente;
 import model.beans.Utente;
 import model.daoFactory.UtenteDAOFactory;
 
@@ -38,7 +39,8 @@ public class RegistrationServlet extends HttpServlet {
 		Gson gson = new Gson();
 		Utente utente =gson.fromJson((String) request.getParameter("user"), Utente.class);
 		if(UtenteDAOFactory.getUtenteDAO().inserisciUtente(utente) != null) {
-			request.getSession().setAttribute("utente", utente);
+			Cliente cliente = (Cliente) UtenteDAOFactory.getUtenteDAO().autenticaUtente(utente.getEmail(), utente.getPassowrd());
+			request.getSession().setAttribute("utente", cliente);
 			response.setStatus(HttpServletResponse.SC_OK);
 		}else {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

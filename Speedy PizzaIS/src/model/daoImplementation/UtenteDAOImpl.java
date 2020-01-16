@@ -69,7 +69,7 @@ public class UtenteDAOImpl implements UtenteDAO{
 					
 				}
 				if (utente.getTipo() == 0) {
-					
+					System.out.println(utente.getTipo());
 					((Cliente) utente).setCarte(UtenteDAOImpl.getCarte(utente.getEmail()));
 					((Cliente) utente).setOrdini(UtenteDAOImpl.getOrdini(utente.getEmail()));
 					((Cliente) utente).setRecensioni(UtenteDAOImpl.getRecensioni(utente.getEmail()));

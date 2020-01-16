@@ -17,6 +17,7 @@ import model.daoInterface.IndirizzoDAO;
 public class IndirizzoDAOImpl  implements IndirizzoDAO{
 	private static final String INSERT="insert into indirizzo values(NULL,?,?,?,?,?);";
 	private static final String GETID="Select  LAST_INSERT_ID();";
+	private static final String GET_BY_ID="SELECT * from speedypizza.indirizzo where id = ?";
 
 	private static final String DELETE="delete from indirizzo where id = ?";
 	private static final String GET_BY_CLIENTE="select * from indirizzo where utente = ?";
@@ -199,6 +200,36 @@ public class IndirizzoDAOImpl  implements IndirizzoDAO{
 		}
 		return indirizzo;
 	}
+	@Override
+	public Indirizzo getIndirizzoById(int id) {
+		Connection connection = null;
+		Indirizzo indirizzo = null;
+		ResultSet result = null;
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			PreparedStatement statement = connection.prepareStatement(IndirizzoDAOImpl.GET_BY_ID);
+	
+			statement.setInt(1, id);
+			result = statement.executeQuery();
+			
+			while(result.next()) {
+				indirizzo=new Indirizzo(result.getInt(5),result.getInt(1),result.getString(2),result.getString(4),result.getString(3),"");
+			}
+		
+			return indirizzo;
+		}catch (Exception e) {
+			System.out.println("Errore durante la connessione." + e.getMessage());
+			return null;
+			
+		} finally {
+			try {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			} catch (SQLException e) {
+				System.out.println("Errore durante la connessione." + e.getMessage());
+			}
+		}
+	}
+	}
 	
 	
-}
+

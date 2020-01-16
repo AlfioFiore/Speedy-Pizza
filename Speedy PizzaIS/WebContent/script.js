@@ -524,11 +524,11 @@ function checkOut() {
 
 function setPaymentMethod(which) {
 	$.ajax({
-		url : 'OrderServlet',
+		url : 'OrdineServlet',
 		type: "POST",
 		data : {
 			method : 'setPaymentMethod',
-			card : which
+			carta : which
 		},
 		success : function(result) {
 			$(".carta-crredito").removeClass("product-selected");
@@ -539,12 +539,14 @@ function setPaymentMethod(which) {
 }
 
 function setAddress(which) {
+	alert(which)
 	$.ajax({
-		url : 'OrderServlet',
+		url : 'OrdineServlet',
 		type: "POST",
 		data : {
+			
 			method : 'setAddress',
-			address : which
+			ind : which + " "
 		},
 		success : function(result) {
 			$(".indirizzo").removeClass("product-selected");
