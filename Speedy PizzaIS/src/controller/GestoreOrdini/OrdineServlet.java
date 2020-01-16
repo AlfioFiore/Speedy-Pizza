@@ -1,17 +1,24 @@
 package controller.GestoreOrdini;
 
 import java.io.IOException;
+import java.sql.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.beans.Carrello;
 import model.beans.Carta;
+import model.beans.Cliente;
 import model.beans.Indirizzo;
+import model.beans.Ordine;
+import model.beans.Pizzeria;
 import model.daoFactory.CartaDAOFactory;
 import model.daoFactory.IndirizzoDAOFactory;
 import model.daoFactory.OrdineDAOFactory;
+import model.daoFactory.PizzeriaDAOFactory;
 
 /**
  * Servlet implementation class OrdineServlet
@@ -58,7 +65,30 @@ public class OrdineServlet extends HttpServlet {
 		request.getSession().setAttribute("cartaScelta", carta);
 		response.setStatus(HttpServletResponse.SC_OK);
 	}else if(request.getParameter("method") != null && request.getParameter("method").equals("confirmOrder")) {
+		Ordine  ordine = new Ordine();
+		ordine.setCarta((Carta)request.getSession().getAttribute("cartaScelta"));
+		ordine.setIndirizzo((Indirizzo)request.getSession().getAttribute("indirizzoScelto"));
+		ordine.setCliente((Cliente)request.getSession().getAttribute("utente"));
+		ordine.setCarrello((Carrello)request.getSession().getAttribute("carrello"));
+		String partitaIva = (String) request.getSession().getAttribute("ristoranteScelto");
+		Pizzeria pizzeria = PizzeriaDAOFactory.getPizzeriaDAO().getPizzeriaByIva(partitaIva);
+		ordine.setPizzeria(pizzeria);
+		if((Carta)request.getSession().getAttribute("cartaScelta") ==null) {
+			ordine.setTipoPagamento(0); //pagamento contanti
+			
+		}else {ordine.setTipoPagamento(1);} //pagamento con carta
+		if((Indirizzo)request.getSession().getAttribute("indirizzoScelto")==null) {
+			ordine.setTipoOrdine(0); //asporto
+		}else {
+			ordine.setTipoOrdine(1); //consegna a casa
+		}
+		ordine.setData(new Date(System.currentTimeMillis()));
+		ordine.setStato("Elaborazione ordine");
+		ordine.setTotale(ordine.getCarrello().getTotale());
+		if(OrdineDAOFactory.getOrdineDAO().inserisciOrdine(ordine)!=null) {
+			response.setStatus(HttpServletResponse.SC_OK);
 
+		}
 	}else {
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}

@@ -30,6 +30,8 @@ public class PizzeriaDAOImpl implements PizzeriaDAO {
 	public static final String GET_FATTORINI="select utente.* from pizzeria inner join utente on pizzeria.partita_iva = utente.pizzeria_fattorino where pizzeria.partita_iva = ?";
 	public static final String INSERT_BY_RICHIESTA = "insert into pizzeria values(?,?,null,null,null,null,?,null,null,?)";
 	public static final String GET_INDIRIZZO="select * from indirizzo where id=?";
+	public static final String GET_PIZZERIA_BY_IVA = "select * from  pizzeria where partita_iva = ?";
+
 	private static Indirizzo getIndirizzo(int id) {
 		ResultSet result=null;
 		Connection connection =null;
@@ -52,14 +54,14 @@ public class PizzeriaDAOImpl implements PizzeriaDAO {
 			}
 			
 		}catch (Exception e) {
-			System.out.println("Errore durante la connessioneee." + e.getMessage());
+			System.out.println("Errore durante la connessio indirizzo." + e.getMessage());
 
 			return null;
 		}finally {
 			try {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			} catch (SQLException e) {
-				System.out.println("Errore durante la connessione." + e.getMessage());
+				System.out.println("Errore durante la connessione indirizzo 2." + e.getMessage());
 				return null;
 			}
 		}
@@ -436,6 +438,52 @@ public class PizzeriaDAOImpl implements PizzeriaDAO {
 		}
 		return set;
 	}
+	@Override
+	public Pizzeria getPizzeriaByIva(String iva) {
+		
+			Connection connection = null;
+			Pizzeria pizz= null;
+			ResultSet result = null;
+			try {
+				connection = DriverManagerConnectionPool.getConnection();
+				PreparedStatement statement = connection.prepareStatement(PizzeriaDAOImpl.GET_PIZZERIA_BY_IVA);
+				statement.setString(1, iva);
+				result = statement.executeQuery();
+				
+					while(result.next()){
+						
+						pizz = new Pizzeria();
+						pizz.setPartitaIva(result.getString(1));
+						pizz.setNome(result.getString(2));
+						pizz.setOrarioApertura(result.getTime(3));
+						pizz.setOrarioChiusura(result.getTime(4));
+						pizz.setGiorniApertura(result.getString(5));
+						pizz.setIndirizzo(PizzeriaDAOImpl.getIndirizzo(result.getInt(6)));
+						pizz.setTitolare(PizzeriaDAOImpl.getTitolare(result.getString(7)));
+						pizz.setIban(result.getString(8));
+						pizz.setDescrizione(result.getString(9));
+						pizz.setTelefono(result.getString(10));
+						pizz.setProdotti(PizzeriaDAOImpl.getProdotti(pizz.getPartitaIva()));
+						
+						
+
+
+					}
+					
+				
+				
+			}catch (SQLException e) {
+				System.out.println("Errore durante la connessionedd." + e.getMessage());
+				return null;
+			}finally {
+				try {
+					DriverManagerConnectionPool.releaseConnection(connection);
+				} catch (SQLException e) {
+					System.out.println("Errore durante la connessioneiii." + e.getMessage());
+				}
+			}
+			return pizz;
+		}
 
 	
 }

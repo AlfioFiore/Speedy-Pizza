@@ -62,6 +62,7 @@ public class CarrelloServlet extends HttpServlet {
 						int x = cart.getProdotti().get(p)+1;
 						cart.getProdotti().remove(p);
 						cart.getProdotti().put(p, x);
+						cart.setTotale(cart.getTotale()+p.getPrezzo());
 					}else {
 						cart.getProdotti().put(p, 1);
 					}
@@ -90,6 +91,8 @@ public class CarrelloServlet extends HttpServlet {
 					if(x >1) {
 					x -=1;
 					cart.getProdotti().put(p, x);
+					cart.setTotale(cart.getTotale()-p.getPrezzo());
+
 					}
 				for(int i :cart.getProdotti().values()) {
 					tot+=i;
@@ -107,7 +110,10 @@ public class CarrelloServlet extends HttpServlet {
 					String partitaIva = (String)request.getSession().getAttribute("ristoranteScelto");
 					
 					Prodotto p = (Prodotto) ProdottoDAOFactory.getProdottoDAO().getProdotto(partitaIva, nomeProdotto);
+					cart.setTotale(cart.getTotale()-(p.getPrezzo()*cart.getProdotti().get(p)));
 					cart.getProdotti().remove(p);
+					
+
 					int tot=0;
 					for(int i :cart.getProdotti().values()) {
 						tot+=i;

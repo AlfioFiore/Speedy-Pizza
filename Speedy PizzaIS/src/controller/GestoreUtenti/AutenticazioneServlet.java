@@ -57,7 +57,7 @@ public class AutenticazioneServlet extends HttpServlet {
 				
 				if (utente.getTipo() == 1) {
 					Pizzeria pizzeria = PizzeriaDAOFactory.getPizzeriaDAO().getPizzeria(utente.getEmail());
-					System.out.println(pizzeria);
+					
 					if(pizzeria != null) {
 						request.getSession().setAttribute("utente", utente);
 						request.getSession().setAttribute("pizzeria", pizzeria);

@@ -25,7 +25,7 @@ import model.beans.Utente;
 import model.daoInterface.OrdineDAO;
 
 public class OrdineDAOImpl implements OrdineDAO {
-	private static final String INSERT_ORDINE="insert into ordine values(NULL,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_ORDINE="insert into ordine values(null,?,?,?,?,?,?,?,?,null,?,null,null,null)";
 	private static final String INSERT_CONTENUTO_ORDINE="insert into contenuto_ordine values(?,?,?,?,?)";
 
 	private static final String UPDATE="update ordine set stato = ? where id = ?";
@@ -95,13 +95,16 @@ public class OrdineDAOImpl implements OrdineDAO {
 	
 
 	@Override
-	public Ordine inserisciOrdine(Ordine ordine) {
+	public synchronized Ordine inserisciOrdine(Ordine ordine) {
+		System.out.println("nel metodo");
 		Connection connection = null;
-		boolean flag1,flag2=false;
+		boolean flag1=false;
 		try {
+			System.out.println("dopo try");
 			connection = DriverManagerConnectionPool.getConnection();
+			System.out.println("dopo connection");
 			PreparedStatement statement = connection.prepareStatement(OrdineDAOImpl.INSERT_ORDINE);
-			PreparedStatement statement2= connection.prepareStatement(OrdineDAOImpl.INSERT_CONTENUTO_ORDINE);
+			System.out.println("dopo statement");
 			statement.setInt(1, ordine.getTipoPagamento());
 			statement.setString(2, ordine.getStato());
 			statement.setFloat(3, ordine.getTotale());
@@ -110,13 +113,13 @@ public class OrdineDAOImpl implements OrdineDAO {
 			statement.setDate(6, ordine.getData());
 			statement.setString(7, ordine.getPizzeria().getIban());
 			statement.setInt(8, ordine.getIndirizzo().getIdIndirizzo());
-			statement.setString(9, ordine.getTracking());
-			statement.setInt(10, ordine.getNumeroOrdine());
-			statement.setString(11, ordine.getFattorino().getEmail());
-			statement.setString(12, ordine.getCarta().getNumeroCarta());
+			statement.setString(9, ordine.getCarta().getNumeroCarta());
+			System.out.println("prima");
 			flag1 = (statement.executeUpdate()>0) ? true:false;
+			System.out.println(flag1);
 			Carrello c = ordine.getCarrello();
 			
+			PreparedStatement statement2= connection.prepareStatement(OrdineDAOImpl.INSERT_CONTENUTO_ORDINE);
 			Iterator<Map.Entry<Prodotto, Integer>> itr = c.getProdotti().entrySet().iterator();
 			int cont=0;
 			while(itr.hasNext()) {
@@ -125,7 +128,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 				statement2.setString(2,ordine.getPizzeria().getIban());
 				statement2.setString(3,entry.getKey().getNome());
 				statement2.setFloat(4, entry.getKey().getPrezzo());
-				statement2.setInt(2,entry.getValue());
+				statement2.setInt(5,entry.getValue());
 				cont = (statement2.executeUpdate()>0) ? +1:0;
 			}
 				
@@ -135,14 +138,14 @@ public class OrdineDAOImpl implements OrdineDAO {
 			
 			
 		}catch (Exception e) {
-			System.out.println("Errore durante la connessione." + e.getMessage());
+			System.out.println("Errore durante la connessionee." + e.getMessage());
 
 			return null;
 		} finally {
 			try {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			} catch (SQLException e) {
-				System.out.println("Errore durante la connessione." + e.getMessage());
+				System.out.println("Errore durante la connession." + e.getMessage());
 			}
 		}
 		return null;

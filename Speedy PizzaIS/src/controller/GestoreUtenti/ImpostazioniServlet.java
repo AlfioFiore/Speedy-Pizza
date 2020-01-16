@@ -55,7 +55,6 @@ public class ImpostazioniServlet extends HttpServlet {
 			String nome = request.getParameter("nome");
 			String cognome = request.getParameter("cognome");
 			String telefono = request.getParameter("telefono");
-			System.out.println(email+nome+cognome+telefono);
 			if (email.equals("") || nome.equals("")|| cognome.equals("") || telefono.equals("")) {
 				
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);	
@@ -101,7 +100,6 @@ public class ImpostazioniServlet extends HttpServlet {
 			Cliente cliente = (Cliente)request.getSession().getAttribute("utente");
 			Indirizzo indirizzo = gson.fromJson(request.getParameter("indirizzo"), Indirizzo.class);
 			indirizzo.setIdCliente(cliente.getEmail());
-			System.out.println(gson.fromJson(request.getParameter("indirizzo"), Indirizzo.class));
 			Indirizzo nuovo =IndirizzoDAOFactory.getIndirizzoDAO().inserisciIndirizzo(indirizzo);
 			if(nuovo != null) {
 								

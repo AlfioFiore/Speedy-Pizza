@@ -49,7 +49,6 @@ public class AffiliazioneServlet extends HttpServlet {
 		if (request.getParameter("method") != null && request.getParameter("method").equals("registra")) {
 			Gson gson = new Gson();
 			RichiestaAffiliazione richiesta = gson.fromJson(request.getParameter("richiesta"), RichiestaAffiliazione.class);
-			System.out.println(richiesta.getPartitaIva());
 			if(RichiestaAffiliazioneDAOFactory.getRichiestaAffiliazioneDAO().inserisciRichiesta(richiesta)!= null) {
 				HashSet<RichiestaAffiliazione> ri = (HashSet<RichiestaAffiliazione>) RichiestaAffiliazioneDAOFactory.getRichiestaAffiliazioneDAO().getRichieste();
 				if(ri != null) {

@@ -12,6 +12,8 @@ public interface PizzeriaDAO {
 	public Pizzeria updatePizzeria(Pizzeria pizzeria,String vecchiaPartita);
 	public ArrayList<Pizzeria> getPizzerieByCitta(String citta);
 	public Pizzeria getPizzeria(String titolare);
+	public Pizzeria getPizzeriaByIva(String iva);
+
 	public Collection<Pizzeria> getPizzerie();
 	public Collection<Utente> getFattorini(String idPizzeria);
 	public Pizzeria inserisciPizzeriaRichiesta(Pizzeria pizzeria);
