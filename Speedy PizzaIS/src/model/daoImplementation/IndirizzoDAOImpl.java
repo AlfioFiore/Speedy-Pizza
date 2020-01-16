@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +21,32 @@ public class IndirizzoDAOImpl  implements IndirizzoDAO{
 	private static final String DELETE="delete from indirizzo where id = ?";
 	private static final String GET_BY_CLIENTE="select * from indirizzo where utente = ?";
 	private static final String UPDATE="update indirizzo set via = ?, cap=?,civico=?,citta=? where id=?";
-	
+	private static final String GET_CITTA="SELECT citta from speedypizza.indirizzo natural join speedypizza.pizzeria";
+	@Override
+	public Collection<String> getCitta(){
+		Connection connection = null;
+		ArrayList<String> citta = new ArrayList<String>();
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			PreparedStatement statement = connection.prepareStatement(IndirizzoDAOImpl.GET_CITTA);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				citta.add(result.getString(1));
+			}
+
+			return citta;
+		}catch (Exception e) {
+			System.out.println("Errore durante la connessione." + e.getMessage());
+			return null;
+			
+		} finally {
+			try {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			} catch (SQLException e) {
+				System.out.println("Errore durante la connessione." + e.getMessage());
+			}
+		}
+	}
 	@Override
 	public boolean updateIndirizzo(Indirizzo indirizzo) {
 		Connection connection = null;

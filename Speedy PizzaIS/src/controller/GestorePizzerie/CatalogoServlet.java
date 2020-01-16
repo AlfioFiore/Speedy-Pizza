@@ -1,6 +1,7 @@
 package controller.GestorePizzerie;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,8 @@ import com.google.gson.Gson;
 import model.beans.Categoria;
 import model.beans.Pizzeria;
 import model.beans.Prodotto;
+import model.daoFactory.CategoriaDAOFactory;
+import model.daoFactory.PizzeriaDAOFactory;
 import model.daoFactory.ProdottoDAOFactory;
 
 /**
@@ -107,7 +110,33 @@ public class CatalogoServlet extends HttpServlet {
 				}else {
 					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				}
-			
+		}else if (request.getParameter("method") != null && request.getParameter("method").equals("getCategorieRistorante")) {
+			String partitaIva = request.getParameter("partita");
+			if(request.getSession().getAttribute("ristoranteScelto") == null) {
+				
+				request.getSession().setAttribute("ristoranteScelto", partitaIva);
+			} else {
+				String res = (String) request.getSession().getAttribute("ristoranteScelto");
+				if (!(res.equals(partitaIva))) {
+					request.getSession().setAttribute("ristoranteScelto", partitaIva);
+					request.getSession().removeAttribute("cart");
+				}
+			}
+			ArrayList<String> categorie = CategoriaDAOFactory.getCategoriaDAO().getCategorieByPizzeria(partitaIva);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(categorie));
+			response.setStatus(HttpServletResponse.SC_OK);
+		}else if (request.getParameter("method") != null && request.getParameter("method").equals("getProdottiCategoria")) {
+			String partitaIva =(String) request.getSession().getAttribute("ristoranteScelto");
+			String categoria = request.getParameter("categoria");
+			ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>)ProdottoDAOFactory.getProdottoDAO().getProdottiByCategoria(partitaIva, categoria);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(prodotti));
+			response.getWriter().write(partitaIva);
+			response.setStatus(HttpServletResponse.SC_OK);
+
 		}else {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
