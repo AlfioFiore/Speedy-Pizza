@@ -42,7 +42,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 	private static final String GET_INDIRIZZO ="select indirizzo.* from indirizzo inner join ordine where ordine.id_indirizzo= ?";
 	private static final String GET_CLIENTE ="select nome,cognome from utente where email = ?";
 	private static final String GET_FATTORINO ="select nome,cognome from utente where email = ?";
-	private static final String GET_PIZZERIA ="select nome from pizzeria where partita_iva= ?";
+	private static final String GET_PIZZERIA ="select nome from speedypizza.pizzeria where partita_iva = ?";
 	private static final String GET_PRODOTTI ="SELECT * FROM contenuto_ordine inner join prodotto on contenuto_ordine.id_pizzeria = prodotto.id_pizzeria and  contenuto_ordine.id_prodotto=prodotto.nome "
 			+ "inner join categoria on categoria.nome = prodotto.id_categoria where id_ordine  = ?";
 
@@ -113,7 +113,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 			statement.setString(4, ordine.getCliente().getEmail());
 			statement.setInt(5, ordine.getTipoOrdine());
 			statement.setDate(6, ordine.getData());
-			statement.setString(7, ordine.getPizzeria().getIban());
+			statement.setString(7, ordine.getPizzeria().getPartitaIva());
 			statement.setInt(8, ordine.getIndirizzo().getIdIndirizzo());
 			statement.setString(9, ordine.getCarta().getNumeroCarta());
 			flag1 = (statement.executeUpdate()>0) ? true:false;
@@ -201,14 +201,20 @@ public class OrdineDAOImpl implements OrdineDAO {
 					o.setTipoOrdine(result.getInt(6));
 					o.setData(result.getDate(7));
 					o.setPizzeria(OrdineDAOImpl.getPizzeria(result.getString(8)));
+					System.out.println(o.getPizzeria());
 					o.setIndirizzo(OrdineDAOImpl.getIndirizzo(result.getInt(9)));
 					o.setTracking(result.getString(10));
-					o.setNumeroOrdine(result.getInt(11));
-					if(o.getTipoOrdine() == 0) {
-					o.setFattorino(OrdineDAOImpl.getFattorino(result.getString(12)));}
-					if(o.getTipoPagamento() == 0) {
-					o.setCarta(OrdineDAOImpl.getCarta(result.getString(13)));}
+					o.setNumeroOrdine(result.getInt(13));
+					if(o.getTipoOrdine() == 1) {
+						o.setFattorino(OrdineDAOImpl.getFattorino(result.getString(12)));
+					}
+					if(o.getTipoPagamento() == 1) {
+						o.setCarta(OrdineDAOImpl.getCarta(result.getString(11)));
+					}
+					
+					
 					o.setCarrello(OrdineDAOImpl.getProdotti(result.getInt(1)));
+					set.add(o);
 				}
 			
 		}catch (Exception e) {
@@ -251,9 +257,9 @@ public class OrdineDAOImpl implements OrdineDAO {
 					o.setPizzeria(OrdineDAOImpl.getPizzeria(result.getString(8)));
 					o.setIndirizzo(OrdineDAOImpl.getIndirizzo(result.getInt(9)));
 					o.setTracking(result.getString(10));
-					o.setNumeroOrdine(result.getInt(11));
+					o.setNumeroOrdine(result.getInt(13));
 					o.setFattorino(OrdineDAOImpl.getFattorino(result.getString(12)));
-					o.setCarta(OrdineDAOImpl.getCarta(result.getString(13)));
+					o.setCarta(OrdineDAOImpl.getCarta(result.getString(11)));
 					o.setCarrello(OrdineDAOImpl.getProdotti(result.getInt(1)));
 					set.add(o);
 					
@@ -299,9 +305,9 @@ public class OrdineDAOImpl implements OrdineDAO {
 					o.setPizzeria(OrdineDAOImpl.getPizzeria(result.getString(8)));
 					o.setIndirizzo(OrdineDAOImpl.getIndirizzo(result.getInt(9)));
 					o.setTracking(result.getString(10));
-					o.setNumeroOrdine(result.getInt(11));
+					o.setNumeroOrdine(result.getInt(13));
 					o.setFattorino(OrdineDAOImpl.getFattorino(result.getString(12)));
-					o.setCarta(OrdineDAOImpl.getCarta(result.getString(13)));
+					o.setCarta(OrdineDAOImpl.getCarta(result.getString(11)));
 					o.setCarrello(OrdineDAOImpl.getProdotti(result.getInt(1)));
 				}
 			
@@ -476,6 +482,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 		ResultSet result=null;
 		Connection connection =null;
 		Pizzeria pizzeria= null;
+		System.out.println(idPizzeria);
 		try {				
 			connection = DriverManagerConnectionPool.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(OrdineDAOImpl.GET_PIZZERIA);
@@ -485,6 +492,8 @@ public class OrdineDAOImpl implements OrdineDAO {
 			while(result.next()) {
 				pizzeria = new Pizzeria();
 				pizzeria.setNome(result.getString(1));
+				pizzeria.setPartitaIva(idPizzeria);
+				
 			}
 			
 		}catch (Exception e) {

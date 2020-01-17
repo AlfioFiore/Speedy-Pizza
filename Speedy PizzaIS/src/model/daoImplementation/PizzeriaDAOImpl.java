@@ -453,7 +453,7 @@ public class PizzeriaDAOImpl implements PizzeriaDAO {
 					while(result.next()){
 						
 						pizz = new Pizzeria();
-						pizz.setPartitaIva(result.getString(1));
+						pizz.setPartitaIva(iva);
 						pizz.setNome(result.getString(2));
 						pizz.setOrarioApertura(result.getTime(3));
 						pizz.setOrarioChiusura(result.getTime(4));

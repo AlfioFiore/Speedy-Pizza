@@ -73,6 +73,8 @@ public class OrdineServlet extends HttpServlet {
 		String partitaIva = (String) request.getSession().getAttribute("ristoranteScelto");
 		Pizzeria pizzeria = PizzeriaDAOFactory.getPizzeriaDAO().getPizzeriaByIva(partitaIva);
 		ordine.setPizzeria(pizzeria);
+		
+
 		if((Carta)request.getSession().getAttribute("cartaScelta") ==null) {
 			ordine.setTipoPagamento(0); //pagamento contanti
 			
@@ -86,8 +88,12 @@ public class OrdineServlet extends HttpServlet {
 		ordine.setStato("Elaborazione ordine");
 		ordine.setTotale(ordine.getCarrello().getTotale());
 		if(OrdineDAOFactory.getOrdineDAO().inserisciOrdine(ordine)!=null) {
+			
+			request.getSession().removeAttribute("cartaScelta");
+			request.getSession().removeAttribute("indirizzoScelto");
+			request.getSession().removeAttribute("carrello");
+			request.getSession().removeAttribute("ristoranteScelto");
 			response.setStatus(HttpServletResponse.SC_OK);
-
 		}
 	}else {
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
