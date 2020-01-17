@@ -19,41 +19,41 @@
 				<h1>Richiesta Affiliazione</h1>
 				<div class="form-group" >
 					<label for="input-nome" style="color: green;">Nome titolare</label>
-					<input type="text" class="form-control input-bordered" id="input-name-reg" style="width: 90%" required>
+					<input type="text" class="form-control input-bordered" id="input-name-reg" style="width: 90%" pattern="[a-zA-z]{2,19}" required>
 				</div> 	
 				
 				<div class="form-group">
 					<label for="input-cognome" style="color: green;">Cognome titolare</label>
-					<input type="text" class="form-control input-bordered" id="input-surname-reg"  style="width: 90%" required>
+					<input type="text" class="form-control input-bordered" id="input-surname-reg"  style="width: 90%" pattern="[a-zA-z]{2,29}" required>
 				</div>
 				<div class="form-group">
 					<label for="input-cognome" style="color: green;">Nome pizzeria</label>
-					<input type="text" class="form-control input-bordered" id="input-pizzeria-reg"  style="width: 90%" required>
+					<input type="text" class="form-control input-bordered" id="input-pizzeria-reg"  style="width: 90%" pattern="[a-zA-z]{2,19}" required>
 				</div>
 				<div class="form-group">
 					<label for="input-email" style="color: green;">E-mail</label>
-					<input type="email" class="form-control input-bordered" id="input-email-reg" style="width: 90%" required>
+					<input type="email" class="form-control input-bordered" id="input-email-reg" style="width: 90%" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
 				</div>
 				<div class="form-group">
 					<label for="input-password" style="color: green;">Password</label>
-					<input type="password" class="form-control input-bordered" id="input-password-reg" style="width: 90%" required>
+					<input type="password" class="form-control input-bordered" id="input-password-reg" style="width: 90%" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}" placeholder="Minimo 6 caratteri - Almeno una lettera e un numero" required>
 				</div>
 				<div class="form-group">
 					<label for="input-conferma-password" style="color: green;">Conferma password</label>
-					<input type="password" class="form-control input-bordered" id="input-conferma-password-reg" style="width: 90%" required>
+					<input type="password" class="form-control input-bordered" id="input-conferma-password-reg" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}" style="width: 90%" required>
 				</div>
 				
 				<div class="form-group">
 					<label for="phone" style="color: green;">Telefono</label>
-					<input type="tel" class="form-control input-bordered" id="input-phone-reg" style="width: 90%" required>
+					<input type="tel" class="form-control input-bordered" id="input-phone-reg" style="width: 90%" pattern="[0-9]{9,14}" required>
 				</div>
 				<div class="form-group">
 					<label for="phone" style="color: green;">Commento</label>
-					<input type="text" class="form-control input-bordered" id="input-commento-reg" style="width: 90%" required>
+					<input type="text" class="form-control input-bordered" id="input-commento-reg" style="width: 90%" pattern="[a-zA-Z0-9 ,]{0,499}"required>
 				</div>
 				<div class="form-group">
 					<label for="input-partita" style="color: green;">Partita iva</label>
-					<input type="text" class="form-control input-bordered" id="input-partita-reg" style="width: 90%" required>
+					<input type="text" class="form-control input-bordered" id="input-partita-reg" style="width: 90%" pattern="[0-9]{11}" required>
 				</div>
 				<input id="btnRegistraRichiesta" type="submit" class="btn btn-outline-success" value="Invia richiesta" style="width: 90%; font-size: 1.2em; margin-top: 4vh; border: 2px solid green;">
 			</form>

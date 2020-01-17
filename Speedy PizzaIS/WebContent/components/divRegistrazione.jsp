@@ -18,7 +18,7 @@
 				</div>
 				<div class="form-group">
 					<label for="input-password" style="color: green;">Password</label>
-					<input type="password" class="form-control input-bordered" id="input-password-reg" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}" style="width: 90%" required>
+					<input type="password" class="form-control input-bordered" id="input-password-reg" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}" style="width: 90%" placeholder="Minimo 6 caratteri - Almeno una lettera e un numero" required>
 				</div>
 				<div class="form-group">
 					<label for="input-conferma-password" style="color: green;">Conferma password</label>
