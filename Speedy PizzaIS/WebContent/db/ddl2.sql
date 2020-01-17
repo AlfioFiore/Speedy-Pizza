@@ -61,16 +61,16 @@ primary key(numero_carta)
  id int not null auto_increment,
  tipo_pagamento int(11) not null,
  stato varchar(30) not null,
- totale varchar(10) not null,
+ totale float not null,
  id_cliente varchar(40) not null,
- tipo_ordine varchar(20) not null,
+ tipo_ordine int not null,
  data_ordine timestamp not null,
  id_pizzeria varchar(25) not null,
  id_indirizzo int not null,
  id_recensione int,
  id_carta varchar(40),
  id_fattorino varchar(40),
- numero_ordine int(11) not null,
+ numero_ordine int(11) null,
  tracker varchar(45),
  
  primary key(id),
@@ -87,6 +87,7 @@ create table categoria(
  iva int not null,
  primary key(nome)
  );
+ 
 create table prodotto(
  nome varchar(20) not null,
  prezzo float not null,
