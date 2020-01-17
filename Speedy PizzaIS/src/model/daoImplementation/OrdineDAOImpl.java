@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.mysql.cj.xdevapi.Result;
+
 import model.DriverManagerConnectionPool;
 import model.beans.Carrello;
 import model.beans.Carta;
@@ -27,6 +29,7 @@ import model.daoInterface.OrdineDAO;
 public class OrdineDAOImpl implements OrdineDAO {
 	private static final String INSERT_ORDINE="insert into ordine values(null,?,?,?,?,?,?,?,?,null,?,null,null,null)";
 	private static final String INSERT_CONTENUTO_ORDINE="insert into contenuto_ordine values(?,?,?,?,?)";
+	private static final String GETID="Select  LAST_INSERT_ID();";
 
 	private static final String UPDATE="update ordine set stato = ? where id = ?";
 	private static final String GET_BY_CLIENTE="select * from ordine where id_cliente = ?";
@@ -101,12 +104,9 @@ public class OrdineDAOImpl implements OrdineDAO {
 		
 		boolean flag1=false;
 		try {
-			System.out.println("dopo try");
 			connection = DriverManagerConnectionPool.getConnection();
-			System.out.println("dopo connection");
 			PreparedStatement statement = connection.prepareStatement(OrdineDAOImpl.INSERT_ORDINE);
 			statement.execute("SET FOREIGN_KEY_CHECKS=0");
-			System.out.println("dopo statement");
 			statement.setInt(1, ordine.getTipoPagamento());
 			statement.setString(2, ordine.getStato());
 			statement.setFloat(3, ordine.getTotale());
@@ -116,9 +116,12 @@ public class OrdineDAOImpl implements OrdineDAO {
 			statement.setString(7, ordine.getPizzeria().getIban());
 			statement.setInt(8, ordine.getIndirizzo().getIdIndirizzo());
 			statement.setString(9, ordine.getCarta().getNumeroCarta());
-			System.out.println("prima");
 			flag1 = (statement.executeUpdate()>0) ? true:false;
-			System.out.println(flag1);
+			if (flag1) {
+				statement = connection.prepareStatement(OrdineDAOImpl.GETID);
+				ResultSet result = statement.executeQuery();
+				while(result.next()) {ordine.setId(result.getInt(1));}
+			}
 			Carrello c = ordine.getCarrello();
 			
 			PreparedStatement statement2= connection.prepareStatement(OrdineDAOImpl.INSERT_CONTENUTO_ORDINE);
