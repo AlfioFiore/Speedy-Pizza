@@ -56,6 +56,7 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(CategoriaDAOImpl.GET_BY_NAME);
+			statement.setString(1, nome);
 			result = statement.executeQuery();
 			if(result != null) {
 				
