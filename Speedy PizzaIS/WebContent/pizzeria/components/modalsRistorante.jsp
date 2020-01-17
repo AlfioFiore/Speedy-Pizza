@@ -68,7 +68,7 @@
 						<label for="confirmNewPassword">Conferma nuova password</label>
 						<input type="password" class="form-control" id="confirmNewPassword" aria-describedby="emailHelp">
 						<div class="invalid-feedback">
-        					Username o password errati.
+        					Email o password errati.
       					</div>
 					</div>
 					
