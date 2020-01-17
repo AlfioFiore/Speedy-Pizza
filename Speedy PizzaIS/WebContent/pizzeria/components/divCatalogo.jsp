@@ -1,6 +1,7 @@
 	
 
-	<%@page import="model.beans.Prodotto"%>
+	<%@page import="java.util.ArrayList"%>
+<%@page import="model.beans.Prodotto"%>
 	<%@page import="model.daoFactory.ProdottoDAOFactory"%>
 	<%@page import="model.daoFactory.CategoriaDAOFactory"%>
 	<%@page import="model.beans.Pizzeria"%>
@@ -11,7 +12,7 @@
 	Set<Categoria>  categorie = (Set<Categoria>)CategoriaDAOFactory.getCategoriaDAO().getCategorie();
 	
 	for (Categoria cat : categorie) {
-		Set<Prodotto> prodotti = (Set<Prodotto>)ProdottoDAOFactory.getProdottoDAO().getProdottiByCategoria(pizzeria.getPartitaIva(), cat.getNome());
+		ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>)ProdottoDAOFactory.getProdottoDAO().getProdottiByCategoria(pizzeria.getPartitaIva(), cat.getNome());
 		
 	%>
 	Categoria: <%=cat.getNome() %><br> IVA : <%=cat.getIva() %> 
