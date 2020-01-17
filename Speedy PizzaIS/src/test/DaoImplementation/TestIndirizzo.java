@@ -32,7 +32,7 @@ public class TestIndirizzo {
 
 	@Test
 	public void testUpdateIndirizzo() {
-		boolean result = manager.updateIndirizzo(new Indirizzo(26, 1, "via di napoli", "81000","Napoli", null));
+		boolean result = manager.updateIndirizzo(new Indirizzo(26, 1, "via l2931", "81000","Napoli", null));
 		assertFalse(result);
 		result = manager.updateIndirizzo(new Indirizzo(26, 1, "via di napoli", "81000","Napoli", null));
 		assertFalse(result);
@@ -50,7 +50,20 @@ public class TestIndirizzo {
 
 	@Test
 	public void testInserisciIndirizzo() {
-		fail("Not yet implemented");
+		Indirizzo i;
+		i = manager.inserisciIndirizzo(new Indirizzo(26, 1, "via l2931", "81000","Napoli", null));
+		assertNotNull(i);
+		i = manager.inserisciIndirizzo(new Indirizzo(26, 1, "via l2931", "81000","Napoli", null));
+		assertNotNull(i);
+		i = manager.inserisciIndirizzo(new Indirizzo(26, 1, "via l2931", "81000","Napoli", null));
+		assertNotNull(i);
+		i = manager.inserisciIndirizzo(new Indirizzo(26, 1, "via l2931", "81000","Napoli", null));
+		assertNotNull(i);
+		i = manager.inserisciIndirizzo(new Indirizzo(26, 1, "via l2931", "81000","Napoli", null));
+		assertNotNull(i);
+		i = manager.inserisciIndirizzo(new Indirizzo(26, 1, "via l2931", "81000","Napoli", null));
+		assertNotNull(i);
+	
 	}
 
 	@Test
