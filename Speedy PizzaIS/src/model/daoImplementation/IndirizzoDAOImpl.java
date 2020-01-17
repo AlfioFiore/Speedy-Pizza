@@ -18,9 +18,9 @@ public class IndirizzoDAOImpl  implements IndirizzoDAO{
 	private static final String INSERT="insert into indirizzo values(NULL,?,?,?,?,?);";
 	private static final String GETID="Select  LAST_INSERT_ID();";
 	private static final String GET_BY_ID="SELECT * from speedypizza.indirizzo where id = ?";
-
+	private static final String GET_BY_PIZZERIA="select indirizzo.* from indirizzo natural join pizzeria where partita_iva=?";
 	private static final String DELETE="delete from indirizzo where id = ?";
-	private static final String GET_BY_CLIENTE="select * from indirizzo where utente = ?";
+	private static final String GET_BY_CLIENTE="select * from speedypizza.indirizzo where utente = ?";
 	private static final String UPDATE="update indirizzo set via = ?, cap=?,civico=?,citta=? where id=?";
 	private static final String GET_CITTA="SELECT citta from speedypizza.indirizzo natural join speedypizza.pizzeria";
 	@Override
@@ -151,12 +151,12 @@ public class IndirizzoDAOImpl  implements IndirizzoDAO{
 	
 			statement.setString(1, idCliente);
 			result = statement.executeQuery();
-			if(result != null) {
+			
 				set = new HashSet<>();
 				while(result.next()) {
 					set.add(new Indirizzo(result.getInt(5),result.getInt(1),result.getString(2),result.getString(4),result.getString(3),idCliente));
 				}
-			}
+			
 			return set;
 		}catch (Exception e) {
 			System.out.println("Errore durante la connessione." + e.getMessage());
@@ -177,7 +177,7 @@ public class IndirizzoDAOImpl  implements IndirizzoDAO{
 		ResultSet result = null;
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
-			PreparedStatement statement = connection.prepareStatement(IndirizzoDAOImpl.GET_BY_CLIENTE);
+			PreparedStatement statement = connection.prepareStatement(IndirizzoDAOImpl.GET_BY_PIZZERIA);
 	
 			statement.setString(1, idCliente);
 			result = statement.executeQuery();
@@ -208,7 +208,7 @@ public class IndirizzoDAOImpl  implements IndirizzoDAO{
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(IndirizzoDAOImpl.GET_BY_ID);
-	
+			
 			statement.setInt(1, id);
 			result = statement.executeQuery();
 			
@@ -229,7 +229,7 @@ public class IndirizzoDAOImpl  implements IndirizzoDAO{
 			}
 		}
 	}
-	}
+}
 	
 	
 
