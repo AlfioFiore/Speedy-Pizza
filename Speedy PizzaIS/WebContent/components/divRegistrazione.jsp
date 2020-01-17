@@ -27,7 +27,7 @@
 				
 				<div class="form-group">
 					<label for="phone" style="color: green;">Telefono</label>
-					<input type="phone" class="form-control input-bordered" id="input-phone-reg" pattern="[0-9]{10,14}" style="width: 90%" required>
+					<input type="phone" class="form-control input-bordered" id="input-phone-reg" pattern="[0-9]{9,14}" style="width: 90%" required>
 				</div>
 				
 				<input id="btnRegistrati" type="submit" class="btn btn-outline-success" value="Registrati" style="width: 90%; font-size: 1.2em; margin-top: 4vh; border: 2px solid green;">

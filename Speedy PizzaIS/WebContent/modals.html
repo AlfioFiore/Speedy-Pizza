@@ -33,11 +33,11 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="username">Email</label>
-						<input type="email" class="form-control" id="input-username" aria-describedby="emailHelp">
+						<input type="email" class="form-control" id="input-username" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" aria-describedby="emailHelp" required>
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input type="password" class="form-control" id="input-password" aria-describedby="emailHelp">
+						<input type="password" class="form-control" id="input-password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}" aria-describedby="emailHelp" required>
 						<div class="invalid-feedback">
         					Email o password errati.
       					</div>
@@ -65,20 +65,20 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="input-citta">Citt&agrave;</label>
-						<input type="text" class="form-control" id="input-citta" required >
+						<input type="text" class="form-control" id="input-citta" pattern="[a-zA-z]{2,12}" required >
 					</div>
 					<div class="form-group">
 						<label for="input-via">Via</label>
-						<input type="text" class="form-control" id="input-via" required >
+						<input type="text" class="form-control" id="input-via" pattern="[a-zA-z]{2,20}" required >
 					</div>
 
 					<div class="form-group">
 						<label for="input-civico">Civico</label>
-						<input type="text" class="form-control" id="input-civico" required>
+						<input type="text" class="form-control" id="input-civico" pattern="[0-9]{1,5}" required>
 					</div>
 					<div class="form-group">
 						<label for="input-CAP">CAP</label>
-						<input type="text" class="form-control" id="input-CAP" maxlength="5" required>
+						<input type="text" class="form-control" id="input-CAP" pattern="[0-9]{1,5}" required>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -93,7 +93,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Aggiungi indirizzo</h5>
+					<h5 class="modal-title" id="exampleModalCenterTitle">Aggiungi Carta</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -102,19 +102,19 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="input-numero-carta">Numero carta</label>
-						<input type="text" class="form-control" id="input-numero-carta" maxlength="16" required>
+						<input type="text" class="form-control" id="input-numero-carta" pattern="^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$" required>
 					</div>
 					<div class="form-group">
 						<label for="input-scadenza">Scadenza(MM/AA)</label>
-						<input type="text" class="form-control" id="input-scadenza" maxlength="5" required>
+						<input type="text" class="form-control" id="input-scadenza" pattern="(?:0[1-9]|1[0-2])/[0-9]{2}" required>
 					</div>
 					<div class="form-group">
 						<label for="input-intestatario">Intestatario</label>
-						<input type="text" class="form-control" id="input-intestatario" maxlength="20" required>
+						<input type="text" class="form-control" id="input-intestatario" pattern="[a-zA-Z,. ]{5,29}" required>
 					</div>
 					<div class="form-group">
 						<label for="input-cvc">Cvc</label>
-						<input type="text" class="form-control" id="input-cvc" maxlength="3" required>
+						<input type="text" class="form-control" id="input-cvc" pattern="[0-9]{3}" required>
 					</div>
 					
 				</div>

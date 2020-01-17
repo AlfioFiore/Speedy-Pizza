@@ -119,17 +119,17 @@
 					</div>
 					<div class="form-group">
 						<label for="nomeProdotto">Prodotto</label>
-						<input type="text" class="form-control" id="nomeProdotto" aria-describedby="emailHelp"/>
+						<input type="text" class="form-control" pattern="[a-zA-z]{2,19}" id="nomeProdotto" aria-describedby="emailHelp" required/>
 						
 					</div>
 					<div class="form-group">
 						<label for="ingredienti">Ingredienti</label>
-						<input type="text" class="form-control" id="ingredienti" aria-describedby="emailHelp"/>
+						<input type="text" class="form-control" id="ingredienti" aria-describedby="emailHelp" pattern="^[a-zA-Z,. ]*$" required/>
 						
 					</div>
 					<div class="form-group">
 						<label for="createPrezzo">Prezzo</label>
-						<input type="text"  class="form-control" id="createPrezzo" aria-describedby="emailHelp"/>
+						<input type="number"  class="form-control" id="createPrezzo" pattern="[0-9]{0.01,}" aria-describedby="emailHelp" min="0.01" step =".01" required/>
 					</div>
 					<div class="form-group">
 						<label for="dispProdotto">Disponibilità</label>
@@ -284,25 +284,25 @@
 			
 					<div class="form-group">
 						<label for="nomeFatt">Nome</label>
-						<input type="text" class="form-control" id="nomeFatt" aria-describedby="emailHelp"/>
+						<input type="text" class="form-control" id="nomeFatt" aria-describedby="emailHelp" pattern="[a-zA-z]{2,19}" required/>
 						
 					</div>
 					<div class="form-group">
 						<label for="cognomeFatt">Cognome</label>
-						<input type="text" class="form-control" id="cognomeFatt" aria-describedby="emailHelp"/>
+						<input type="text" class="form-control" id="cognomeFatt" aria-describedby="emailHelp" pattern="[a-zA-z]{2,29}" required/>
 						
 					</div>
 					<div class="form-group">
 						<label for="emailFatt">Email</label>
-						<input type="text"  class="form-control" id="emailFatt" aria-describedby="emailHelp"/>
+						<input type="text"  class="form-control" id="emailFatt" aria-describedby="emailHelp" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required/>
 					</div>
 					<div class="form-group">
 						<label for="passwordFatt">Password</label>
-						<input type="password"  class="form-control" id="passwordFatt" aria-describedby="emailHelp"/>
+						<input type="password"  class="form-control" id="passwordFatt" aria-describedby="emailHelp" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}" required/>
 					</div>	
 					<div class="form-group">
 						<label for="telefonoFatt">Telefono</label>
-						<input type="text"  class="form-control" id="telefonoFatt" aria-describedby="emailHelp"/>
+						<input type="text"  class="form-control" id="telefonoFatt" aria-describedby="emailHelp" pattern="[0-9]{9,14}" required/>
 					</div>				
 				
 				
