@@ -36,9 +36,8 @@ for (Ordine i : setOrdini) {
 	 String dataafin = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 	 	Pizzeria pizzeria = i.getPizzeria();
 	 	Carrello carrello = i.getCarrello();
-		
-		
 %>
+
 <div class="row w-100" style="padding-bottom: 2vh;">
 <div class="col-md-11 <%=i.getId() %>" style="padding-top: 2vh;" data-toggle="collapse" href="#div<%=i.getId()%>" role="button" aria-expanded="false" aria-controls="collapseExample">
 	<div class="card card-interna">
