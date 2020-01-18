@@ -593,7 +593,8 @@ function showReview(where, restaurant) {
 			var toPrint="<span style=\"color: green;\">Non hai ancora lasciato una recensione.</span><br>"+
 						"<div class=\"form-group\">"+
 							"<label for=\"numberStar\">Stelle</label>"+
-							"<select class=\"form-control\" id=\"numberStar\">"+
+							"<select class=\"form-control\" id=\"numberStar\" required>"+
+								"<option disabled selected value>Scegli voto</option>" +
 								"<option value=\"1\">1</option>"+
 								"<option value=\"2\">2</option>"+
 								"<option value=\"3\">3</option>"+
@@ -603,7 +604,7 @@ function showReview(where, restaurant) {
 						"</div>"+
 						"<div class=\"form-group\">"+
 							"<label for=\"commento\">Commento</label>"+
-							"<textarea class=\"form-control\" id=\"commento\" rows=\"5\" cols=\"20\"></textarea>"+
+							"<textarea class=\"form-control\" id=\"commento\" rows=\"5\" cols=\"20\" pattern=\"[a-zA-Z,. ]{1,499}\" required></textarea>"+
 						"</div>";
 			$("#modalOrder .modal-body").html(toPrint);
 			$("#modalOrder .modal-footer").html("<button onclick=\"sendReview('"+where+"', '"+restaurant+"');\" class=\"btn btn-primary\">Invia</button>");
