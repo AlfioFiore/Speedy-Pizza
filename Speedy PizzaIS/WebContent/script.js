@@ -591,7 +591,8 @@ function showReview(where, restaurant) {
 		error : function(result) {
 			$("#modalOrderTitle").html("Recensione - ordine n."+where);
 			var toPrint="<span style=\"color: green;\">Non hai ancora lasciato una recensione.</span><br>"+
-						"<div class=\"form-group\">"+
+				"<form onsubmit=\"sendReview('"+where+"', '"+restaurant+"');\">"+	
+				"<div class=\"form-group\">"+
 							"<label for=\"numberStar\">Stelle</label>"+
 							"<select class=\"form-control\" id=\"numberStar\" required>"+
 								"<option disabled selected value>Scegli voto</option>" +
@@ -604,10 +605,11 @@ function showReview(where, restaurant) {
 						"</div>"+
 						"<div class=\"form-group\">"+
 							"<label for=\"commento\">Commento</label>"+
-							"<textarea class=\"form-control\" id=\"commento\" rows=\"5\" cols=\"20\" pattern=\"[a-zA-Z,. ]{1,499}\" required></textarea>"+
-						"</div>";
+							"<textarea class=\"form-control\" id=\"commento\" pattern=\"[a-zA-Z,. ]{2,499}\" required></textarea>"+
+						"</div>"+
+						"<input type=\"submit\" class=\"btn btn-primary\"value=\"Invia\"> </form>";
 			$("#modalOrder .modal-body").html(toPrint);
-			$("#modalOrder .modal-footer").html("<button onclick=\"sendReview('"+where+"', '"+restaurant+"');\" class=\"btn btn-primary\">Invia</button>");
+			
 		}
 	});
 }
