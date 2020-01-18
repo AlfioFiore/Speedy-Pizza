@@ -28,7 +28,7 @@ import model.beans.Utente;
 import model.daoInterface.OrdineDAO;
 
 public class OrdineDAOImpl implements OrdineDAO {
-	private static final String INSERT_ORDINE="insert into ordine values(null,?,?,?,?,?,?,?,?,null,?,null,null,?)";
+	private static final String INSERT_ORDINE="insert into ordine values(null,?,?,?,?,?,?,?,?,null,?,null,?,?)";
 	private static final String INSERT_CONTENUTO_ORDINE="insert into contenuto_ordine values(?,?,?,?,?)";
 	private static final String GETID="Select  LAST_INSERT_ID();";
 
@@ -103,7 +103,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 		
 		Connection connection = null;
 		
-		boolean flag1=false;
+		boolean flag1,flag2=false;
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(OrdineDAOImpl.INSERT_ORDINE);
@@ -132,11 +132,16 @@ public class OrdineDAOImpl implements OrdineDAO {
 			flag1 = (statement.executeUpdate()>0) ? true:false;
 			
 			if (flag1) {
+				
 				statement = connection.prepareStatement(OrdineDAOImpl.GETID);
 				ResultSet result = statement.executeQuery();
 				while(result.next()) {ordine.setId(result.getInt(1));}
 			}
-			
+			PreparedStatement statement3 = connection.prepareStatement("update ordine set numero_ordine = ? where id_ordine=?");
+			statement3.setInt(1, ordine.getId());
+			statement3.setInt(2, ordine.getId());
+			flag2 = (statement3.executeUpdate()>0) ? true:false;
+
 			Carrello c = ordine.getCarrello();
 			PreparedStatement statement2= connection.prepareStatement(OrdineDAOImpl.INSERT_CONTENUTO_ORDINE);
 			Iterator<Map.Entry<Prodotto, Integer>> itr = c.getProdotti().entrySet().iterator();
