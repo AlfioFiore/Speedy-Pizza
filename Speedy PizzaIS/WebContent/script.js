@@ -577,7 +577,7 @@ function confermaOrdine() {
 function showReview(where, restaurant) {
 	$("#modalOrder").modal('show');
 	$.ajax({
-		url : 'OrdineServlet',
+		url : 'RecensioneServlet',
 		type: "POST",
 		data : {
 			method : 'getDetailReview',
@@ -612,7 +612,7 @@ function showReview(where, restaurant) {
 }
 function sendReview(ordine, risto) {
 	$.ajax({
-		url : 'OrdineServlet',
+		url : 'RecensioneServlet',
 		type: "POST",
 		data : {
 			method : 'sendReview',

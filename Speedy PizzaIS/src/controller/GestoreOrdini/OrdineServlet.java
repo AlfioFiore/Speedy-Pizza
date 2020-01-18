@@ -118,29 +118,7 @@ public class OrdineServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(new Gson().toJson(o));
 		response.setStatus(HttpServletResponse.SC_OK);
-	}else if(request.getParameter("method") != null && request.getParameter("method").equals("getDetailReview")) {
-		int idOrdine = Integer.parseInt(request.getParameter("ordine"));
-		Recensione r = RecensioneDAOFactory.getRecensioneDAO().getRecensione(idOrdine);
-		System.out.println(new Gson().toJson(r));
-		if(r!=null) {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new Gson().toJson(r));
-			response.setStatus(HttpServletResponse.SC_OK);
-		}else {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}
-	}else if(request.getParameter("method") != null && request.getParameter("method").equals("sendReview")) {
-		int idOrdine = Integer.parseInt(request.getParameter("ordine"));
-		String commento = (String) request.getParameter("commento");
-		int stelle = Integer.parseInt(request.getParameter("stelle"));
-		Recensione r = new Recensione(commento, stelle, idOrdine, new Date(System.currentTimeMillis()));
-		if(RecensioneDAOFactory.getRecensioneDAO().inserisciRecensione(idOrdine, r) !=null){
-			response.setStatus(HttpServletResponse.SC_OK);
-			
-		}else {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}
+	
 
 	}else {
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

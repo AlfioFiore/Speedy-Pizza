@@ -69,9 +69,11 @@ public class UtenteDAOImpl implements UtenteDAO{
 					
 				}
 				if (utente.getTipo() == 0) {
-					System.out.println(utente.getTipo());
+					
 					((Cliente) utente).setCarte(UtenteDAOImpl.getCarte(utente.getEmail()));
-					((Cliente) utente).setOrdini(UtenteDAOImpl.getOrdini(utente.getEmail()));
+					System.out.println("dopo");
+					//((Cliente) utente).setOrdini(UtenteDAOImpl.getOrdini(utente.getEmail()));
+					System.out.println("prima");
 					((Cliente) utente).setRecensioni(UtenteDAOImpl.getRecensioni(utente.getEmail()));
 					((Cliente) utente).setIndirizzi(UtenteDAOImpl.getIndirizzi(utente.getEmail()));
 					
@@ -356,8 +358,12 @@ public class UtenteDAOImpl implements UtenteDAO{
 			if(result != null) {
 				set = new HashSet<Carta>();
 				while(result.next()) {
-					set.add(new Carta(result.getNString(1), result.getNString(4), result.getNString(3), result.getString(2),result.getNString(5)));
-					
+					Carta c = new Carta();
+					c.setNumeroCarta(result.getString(1));
+					c.setScadenza(result.getString(2));
+					c.setCvc(result.getString(3));
+					c.setIntestatario(result.getString(4));
+					set.add(c);
 				}
 			}
 		}catch (Exception e) {
@@ -411,7 +417,7 @@ public class UtenteDAOImpl implements UtenteDAO{
 	/*LA FUNZIONE PRENDE IN INPUT L'IDENTIFICATIVO DEL CLIENTE E PRENDE TUTTI GLI ORDINI AD ESSO ASSOCIATO
 	 * PER OGNI ORDINE PRENDE:
 	 * 	NOME PIZZERIA; NUMERO CARTA UTILIZZATA PER IL PAGAMENTO; NOME E COGNOME DEL FATTORINO; INDIRIZZO DI CONSEGNA*/
-	private static Set<Ordine> getOrdini(String email) {
+	/*private static Set<Ordine> getOrdini(String email) {
 		ResultSet result=null;
 		Connection connection =null;
 		Set<Ordine> set = null;
@@ -421,7 +427,7 @@ public class UtenteDAOImpl implements UtenteDAO{
 			preparedStatement.setString(1, email);
 			
 			result = preparedStatement.executeQuery();
-			if(result != null) {
+			
 				set = new HashSet<Ordine>();
 				while(result.next()) {
 					Ordine ordine = new Ordine();
@@ -442,7 +448,7 @@ public class UtenteDAOImpl implements UtenteDAO{
 								
 					}
 					ordine.setPizzeria(pizzeria);
-					preparedStatement2 = connection.prepareStatement("select numero_carta from ordine inner join carta where ordine.id = ?");
+					preparedStatement2 = connection.prepareStatement("select numero_carta from ordine natural join carta where ordine.id = ?");
 					preparedStatement2.setInt(1, ordine.getId());
 					result2 = preparedStatement2.executeQuery();
 					Carta carta = new Carta();
@@ -478,10 +484,8 @@ public class UtenteDAOImpl implements UtenteDAO{
 								
 					}
 					ordine.setIndirizzo(indirizzo);
-					
-					
 				}
-			}
+			
 		}catch (Exception e) {
 			System.out.println("Errore durante la connessione." + e.getMessage());
 
@@ -496,7 +500,7 @@ public class UtenteDAOImpl implements UtenteDAO{
 		}
 		return set;
 		
-	}
+	}*/
 	
 	private static Set<Indirizzo> getIndirizzi(String email) {
 		ResultSet result=null;

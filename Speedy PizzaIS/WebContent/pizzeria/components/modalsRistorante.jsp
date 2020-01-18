@@ -120,7 +120,7 @@
 					</div>
 					<div class="form-group">
 						<label for="nomeProdotto">Prodotto</label>
-						<input type="text" class="form-control" pattern="[a-zA-z]{2,19}" id="nomeProdotto" aria-describedby="emailHelp" required/>
+						<input type="text" class="form-control" pattern="[a-zA-z ]{2,19}" id="nomeProdotto" aria-describedby="emailHelp" required/>
 						
 					</div>
 					<div class="form-group">
