@@ -100,8 +100,8 @@
 				<div class="modal-body" style="color: #333333;">
 					<div class="form-group">
 						<label for="createCat">Categoria</label>
-						<select id="createCat">
-					
+						<select id="createCat" required>
+						<option disabled selected value>Scegli categoria</option>
 						<%
 
 						
@@ -113,6 +113,7 @@
 						for(Categoria c : cat) {
 							
 						%>
+							
 							<option value="<%=c.getNome() %>"><%=c.getNome() %></option>
 							<%} %>
 						</select>
@@ -124,7 +125,7 @@
 					</div>
 					<div class="form-group">
 						<label for="ingredienti">Ingredienti</label>
-						<input type="text" class="form-control" id="ingredienti" aria-describedby="emailHelp" pattern="^[a-zA-Z,. ]*$" required/>
+						<input type="text" class="form-control" id="ingredienti" aria-describedby="emailHelp" pattern="^[a-zA-Z,. ]{3,99}" required/>
 						
 					</div>
 					<div class="form-group">

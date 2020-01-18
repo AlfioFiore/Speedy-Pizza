@@ -133,7 +133,7 @@ var categoria = {
 			categoria : JSON.stringify(categoria)
 		},
 		success : function() {
-			alert("inserito");			
+			//alert("inserito");			
 			$("#modalCreateProduct").modal('hide');
 			ristoCatalogo()
 		},

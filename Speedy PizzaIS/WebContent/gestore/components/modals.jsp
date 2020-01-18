@@ -20,7 +20,7 @@
 			
 					<div class="form-group">
 						<label for="nomeRist">Ristorante</label>
-						<select id="elencoPizzerie">
+						<select id="elencoPizzerie" required="required">
 							<%
 								for(Pizzeria p:pizzerie){
 							%>
