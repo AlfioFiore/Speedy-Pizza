@@ -24,11 +24,11 @@
 				
 				<div class="form-group">
 					<label for="input-cognome" style="color: green;">Cognome titolare</label>
-					<input type="text" class="form-control input-bordered" id="input-surname-reg"  style="width: 90%" pattern="[a-zA-z]{2,29}" required>
+					<input type="text" class="form-control input-bordered" id="input-surname-reg"  style="width: 90%" pattern="[a-zA-z ]{2,29}" required>
 				</div>
 				<div class="form-group">
 					<label for="input-cognome" style="color: green;">Nome pizzeria</label>
-					<input type="text" class="form-control input-bordered" id="input-pizzeria-reg"  style="width: 90%" pattern="[a-zA-z]{2,19}" required>
+					<input type="text" class="form-control input-bordered" id="input-pizzeria-reg"  style="width: 90%" pattern="[a-zA-Z0-9\-\s]{3,19}" required>
 				</div>
 				<div class="form-group">
 					<label for="input-email" style="color: green;">E-mail</label>
