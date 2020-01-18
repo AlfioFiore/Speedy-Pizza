@@ -53,7 +53,7 @@ primary key(numero_carta)
  create table recensione(
 	id int not null auto_increment,
 	starring int not null,
-	recensione varchar(100) not null,
+	recensione varchar(600) not null,
     date date not null,
     id_ordine int not null,
     primary key (id)
