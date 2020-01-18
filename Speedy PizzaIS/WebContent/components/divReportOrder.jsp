@@ -42,20 +42,24 @@ for (Ordine i : setOrdini) {
 <div class="col-md-11 <%=i.getId() %>" style="padding-top: 2vh;" data-toggle="collapse" href="#div<%=i.getId()%>" role="button" aria-expanded="false" aria-controls="collapseExample">
 	<div class="card card-interna">
 		<div class="card-body w-100">
-			<span style="color: green;"><%=pizzeria.getNome() %> - n. <%=i.getId() %> del <%=dataafin %></span>
+			<span style="color: green;">
+				<%=pizzeria.getNome() %> - n. <%=i.getId() %> del <%=dataafin %>
+				Tracker: <%=i.getTracking() %>
+				</span>
 			<div class="collapse row" id="div<%=i.getId()%>">
 			<div class="row col-xl-12" style="color: green;">
 		 			<div class="col-md-4"> <p>Nome</p></div>
 					<div class="col-md-4"> <p>Categoria</p></div>
 					<div class="col-md-2"> <p>Quantit&agrave;</p></div>
-					<div class="col-md-1"> <p>IVA</p></div>
-					<div class="col-md-1"> <p>&euro; ut.</p></div>				
+					<div class="col-md-2"> <p>&euro; Unitario.</p></div>				
 				</div>
 					<%
 		String ref="";
 		
 		Iterator<Map.Entry<Prodotto, Integer>> itr = carrello.getProdotti().entrySet().iterator();
+		System.out.print(carrello.getProdotti());
 		while(itr.hasNext()) {
+			
 			Map.Entry<Prodotto, Integer> entry = itr.next();
 			
 			%>
@@ -63,11 +67,10 @@ for (Ordine i : setOrdini) {
 		 			<div class="col-md-4"> <p><%=entry.getKey().getNome() %></p></div>
 					<div class="col-md-4"> <p><%=entry.getKey().getCategoria().getNome()%></p></div>
 					<div class="col-md-2"> <p><%=entry.getValue() %> pz.</p></div>
-					<div class="col-md-1"> <p><%=entry.getKey().getCategoria().getIva() %>&percnt;</p></div>
-					<div class="col-md-1"> <p>&euro;  <%=entry.getKey().getPrezzo()*entry.getValue() %></p></div>				
+					<div class="col-md-2"> <p>&euro;  <%=entry.getKey().getPrezzo()*entry.getValue() %></p></div>				
 				</div>
 		
-		
+		<%} %>
 
 </div>
 		</div>
@@ -78,7 +81,8 @@ for (Ordine i : setOrdini) {
 	
 
 </div>
+<% } %>
 </div>
-<% }} %>
+
 
 <div class="w-100 mb-5"></div>

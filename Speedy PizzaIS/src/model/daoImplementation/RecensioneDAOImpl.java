@@ -33,6 +33,7 @@ public class RecensioneDAOImpl implements RecensioneDAO {
 
 		}catch (SQLException e) {
 			System.out.println("Errore durante la connessione." + e.getMessage());
+			e.printStackTrace();
 			return null;
 		}finally {
 			try {
@@ -53,13 +54,13 @@ public class RecensioneDAOImpl implements RecensioneDAO {
 			PreparedStatement statement = connection.prepareStatement(RecensioneDAOImpl.GET_ALL);
 			
 			result = statement.executeQuery();
-			if(result != null) {
+			
 				set = new HashSet<Recensione>();
 				while(result.next()) {
 					set.add(new Recensione(result.getString(3), result.getInt(2), result.getInt(5),result.getDate(4)));
 					
 				}
-			}
+			
 			
 			
 		}catch (Exception e) {
@@ -77,16 +78,16 @@ public class RecensioneDAOImpl implements RecensioneDAO {
 	}
 
 	@Override
-	public Recensione getRecensione(String idOrdine) {
+	public Recensione getRecensione(int idOrdine) {
 		Connection connection = null;
 		Recensione recensione = null;
 		ResultSet result = null;
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(RecensioneDAOImpl.GET_BY_ORDINE);
-			statement.setString(1, idOrdine);
+			statement.setInt(1, idOrdine);
 			result = statement.executeQuery();
-			if(result != null) {
+			while(result.next()) {
 				recensione = new Recensione(result.getString(3), result.getInt(2), result.getInt(5),result.getDate(4));
 			}
 			
@@ -114,12 +115,12 @@ public class RecensioneDAOImpl implements RecensioneDAO {
 			PreparedStatement statement = connection.prepareStatement(RecensioneDAOImpl.GET_BY_CLIENTE);
 			statement.setString(1, idCliente);
 			result = statement.executeQuery();
-			if(result != null) {
+			
 				set = new HashSet<Recensione>();
 				while(result.next()) {
 					set.add(new Recensione(result.getString(3), result.getInt(2), result.getInt(5),result.getDate(4)));
 					
-				}
+				
 			}
 			
 		}catch (Exception e) {

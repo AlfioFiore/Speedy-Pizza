@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.mysql.cj.xdevapi.Result;
+import com.sun.tools.javac.code.Types;
 
 import model.DriverManagerConnectionPool;
 import model.beans.Carrello;
@@ -45,9 +46,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 	private static final String GET_CLIENTE ="select nome,cognome from utente where email = ?";
 	private static final String GET_FATTORINO ="select nome,cognome from utente where email = ?";
 	private static final String GET_PIZZERIA ="select nome from speedypizza.pizzeria where partita_iva = ?";
-	private static final String GET_PRODOTTI ="SELECT * FROM contenuto_ordine inner join prodotto on contenuto_ordine.id_pizzeria = prodotto.id_pizzeria and  contenuto_ordine.id_prodotto=prodotto.nome "
-			+ "inner join categoria on categoria.nome = prodotto.id_categoria where id_ordine  = ?";
-
+	private static final String GET_PRODOTTI ="SELECT * FROM contenuto_ordine natural join prodotto where id_ordine= ?;";
 	@Override
 	public Collection<Ordine> getOrdiniByFattorino(String idFattorino){
 		ResultSet result=null;
@@ -101,7 +100,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 
 	@Override
 	public synchronized Ordine inserisciOrdine(Ordine ordine) {
-		System.out.println("nel metodo");
+		
 		Connection connection = null;
 		
 		boolean flag1=false;
@@ -116,24 +115,36 @@ public class OrdineDAOImpl implements OrdineDAO {
 			statement.setInt(5, ordine.getTipoOrdine());
 			statement.setDate(6, ordine.getData());
 			statement.setString(7, ordine.getPizzeria().getPartitaIva());
-			statement.setInt(8, ordine.getIndirizzo().getIdIndirizzo());
+			if(ordine.getIndirizzo()!=null) {
+				statement.setInt(8, ordine.getIndirizzo().getIdIndirizzo());
+			}else {
+				statement.setNull(8,java.sql.Types.NULL);
+
+			}
+			if(ordine.getCarta()!=null) {
 			statement.setString(9, ordine.getCarta().getNumeroCarta());
+			}else {
+				statement.setNull(9,java.sql.Types.NULL);
+
+			}
 			statement.setString(10, ordine.getTracking());
+			
 			flag1 = (statement.executeUpdate()>0) ? true:false;
+			
 			if (flag1) {
 				statement = connection.prepareStatement(OrdineDAOImpl.GETID);
 				ResultSet result = statement.executeQuery();
 				while(result.next()) {ordine.setId(result.getInt(1));}
 			}
-			Carrello c = ordine.getCarrello();
 			
+			Carrello c = ordine.getCarrello();
 			PreparedStatement statement2= connection.prepareStatement(OrdineDAOImpl.INSERT_CONTENUTO_ORDINE);
 			Iterator<Map.Entry<Prodotto, Integer>> itr = c.getProdotti().entrySet().iterator();
 			int cont=0;
 			while(itr.hasNext()) {
 				Map.Entry<Prodotto, Integer> entry = itr.next();
 				statement2.setInt(1, ordine.getId());
-				statement2.setString(2,ordine.getPizzeria().getIban());
+				statement2.setString(2,ordine.getPizzeria().getPartitaIva());
 				statement2.setString(3,entry.getKey().getNome());
 				statement2.setFloat(4, entry.getKey().getPrezzo());
 				statement2.setInt(5,entry.getValue());
@@ -146,7 +157,8 @@ public class OrdineDAOImpl implements OrdineDAO {
 			
 			
 		}catch (Exception e) {
-			System.out.println("Errore durante la connessionee." + e.getMessage());
+			System.out.println("Errore durante la connessionee.");
+			e.printStackTrace();
 
 			return null;
 		} finally {
@@ -204,25 +216,20 @@ public class OrdineDAOImpl implements OrdineDAO {
 					o.setTipoOrdine(result.getInt(6));
 					o.setData(result.getDate(7));
 					o.setPizzeria(OrdineDAOImpl.getPizzeria(result.getString(8)));
-					System.out.println(o.getPizzeria());
 					o.setIndirizzo(OrdineDAOImpl.getIndirizzo(result.getInt(9)));
-					o.setTracking(result.getString(10));
+					o.setRecensione(OrdineDAOImpl.getRecensione(o.getId()));
+					o.setTracking(result.getString(14));
 					o.setNumeroOrdine(result.getInt(13));
-					if(o.getTipoOrdine() == 1) {
-						o.setFattorino(OrdineDAOImpl.getFattorino(result.getString(12)));
-					}
 					if(o.getTipoPagamento() == 1) {
 						o.setCarta(OrdineDAOImpl.getCarta(result.getString(11)));
 					}
-					
-					
 					o.setCarrello(OrdineDAOImpl.getProdotti(result.getInt(1)));
 					set.add(o);
 				}
 			
 		}catch (Exception e) {
 			System.out.println("Errore durante la connessione." + e.getMessage());
-
+			e.printStackTrace();
 			return null;
 		}finally {
 			try {
@@ -297,21 +304,23 @@ public class OrdineDAOImpl implements OrdineDAO {
 			
 			result = preparedStatement.executeQuery();
 			while(result.next()) {
-					o=new Ordine();
-					o.setId(result.getInt(1));
-					o.setTipoPagamento(result.getInt(2));
-					o.setStato(result.getString(3));
-					o.setTotale(result.getFloat(4));
-					o.setCliente(OrdineDAOImpl.getCliente(result.getString(5)));
-					o.setTipoOrdine(result.getInt(6));
-					o.setData(result.getDate(7));
-					o.setPizzeria(OrdineDAOImpl.getPizzeria(result.getString(8)));
-					o.setIndirizzo(OrdineDAOImpl.getIndirizzo(result.getInt(9)));
-					o.setTracking(result.getString(10));
-					o.setNumeroOrdine(result.getInt(13));
-					o.setFattorino(OrdineDAOImpl.getFattorino(result.getString(12)));
+				o = new Ordine();
+				o.setId(result.getInt(1));
+				o.setTipoPagamento(result.getInt(2));
+				o.setStato(result.getString(3));
+				o.setTotale(result.getFloat(4));
+				o.setCliente(OrdineDAOImpl.getCliente(result.getString(5)));
+				o.setTipoOrdine(result.getInt(6));
+				o.setData(result.getDate(7));
+				o.setPizzeria(OrdineDAOImpl.getPizzeria(result.getString(8)));
+				o.setIndirizzo(OrdineDAOImpl.getIndirizzo(result.getInt(9)));
+				o.setRecensione(OrdineDAOImpl.getRecensione(o.getId()));
+				o.setTracking(result.getString(14));
+				o.setNumeroOrdine(result.getInt(13));
+				if(o.getTipoPagamento() == 1) {
 					o.setCarta(OrdineDAOImpl.getCarta(result.getString(11)));
-					o.setCarrello(OrdineDAOImpl.getProdotti(result.getInt(1)));
+				}
+				o.setCarrello(OrdineDAOImpl.getProdotti(result.getInt(1)));
 				}
 			
 		}catch (Exception e) {
@@ -405,7 +414,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 				carta.setCvc(result.getString(3));
 				carta.setIntestatario(result.getString(4));
 			}
-			
+			return carta;
 		}catch (Exception e) {
 			System.out.println("Errore durante la connessione." + e.getMessage());
 
@@ -418,7 +427,6 @@ public class OrdineDAOImpl implements OrdineDAO {
 				return null;
 			}
 		}
-		return carta;
 		
 	}
 	private static Recensione getRecensione(int idOrdine) {
@@ -559,7 +567,8 @@ public class OrdineDAOImpl implements OrdineDAO {
 				prodotti = new HashMap<Prodotto,Integer>();
 				while(result.next()) {
 					Prodotto p = new Prodotto();
-					p.setCategoria(new Categoria(result.getString(12),result.getInt(13)));
+					Categoria c = new Categoria(); c.setNome(result.getString(9));
+					p.setCategoria(c);
 					p.setNome(result.getString(3));
 					p.setPrezzo(result.getFloat(4));
 					prodotti.put(p, result.getInt(5));

@@ -96,12 +96,12 @@ for (Ordine or : ordini) {
 	
 <div class="row order-row product-row <%=or.getId() %>" data-toggle="collapse" href="#div<%=or.getId()%>" role="button" aria-expanded="false" aria-controls="collapseExample">
 	<div class="col-1 col-md-1 col-lg-1"> <p><%=or.getNumeroOrdine()%> </p></div>
-	<div class="col-1 col-md-1 col-lg-1">
+	<div >
 		<select class="orderStateSelect" style="z-index: +2;" ordine="<%=or.getId()%>">
 			<%=toPrintt%>
 		</select>
 	</div>
-	<div class="col-3 col-md-3 col-lg-3"> <p><%=or.getCliente().getNome()%> <%=or.getCliente().getCognome()%></p></div>
+	<div class="col-2 col-md-2 col-lg-2"> <p><%=or.getCliente().getNome()%> <%=or.getCliente().getCognome()%></p></div>
 	<div class="col-1 col-md-1 col-lg-1"> <p>&euro;  <%=or.getTotale()%></p></div>
 	<div class="col-1 col-md-1 col-lg-1"> <p><%=tipoPagamento%></p></div>
 	<div class="col-3 col-md-4 col-lg-4"> <p><%=or.getData()%></p></div>
@@ -137,10 +137,12 @@ for (Ordine or : ordini) {
 
 	<div class="row">
 		<div class="col-12" style="color: red;">
-		Consegnare a: <%=or.getIndirizzo().toString() %>
+		
 		</div>
-	</div>	
+	</div>
+	
 </div>
-<%} %>
+
 </div>
+<%} %>	
 <div class="w-100 mb-5"></div>

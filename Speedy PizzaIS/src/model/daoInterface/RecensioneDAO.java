@@ -8,6 +8,6 @@ import model.beans.Recensione;
 public interface RecensioneDAO {
 	public Recensione inserisciRecensione(int idOrdine,Recensione recensione);
 	public Collection<Recensione> getRecensioni();
-	public Recensione getRecensione(String idOrdine);
+	public Recensione getRecensione(int idOrdine);
 	public Collection<Recensione> getRecensioniCliente(String idCliente);
 }

@@ -11,16 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import model.beans.Carrello;
 import model.beans.Carta;
 import model.beans.Cliente;
 import model.beans.Indirizzo;
 import model.beans.Ordine;
 import model.beans.Pizzeria;
+import model.beans.Recensione;
 import model.daoFactory.CartaDAOFactory;
 import model.daoFactory.IndirizzoDAOFactory;
 import model.daoFactory.OrdineDAOFactory;
 import model.daoFactory.PizzeriaDAOFactory;
+import model.daoFactory.RecensioneDAOFactory;
 
 /**
  * Servlet implementation class OrdineServlet
@@ -75,19 +79,22 @@ public class OrdineServlet extends HttpServlet {
 		String partitaIva = (String) request.getSession().getAttribute("ristoranteScelto");
 		Pizzeria pizzeria = PizzeriaDAOFactory.getPizzeriaDAO().getPizzeriaByIva(partitaIva);
 		ordine.setPizzeria(pizzeria);
-		HashSet<String> set = (HashSet<String>)OrdineDAOFactory.getOrdineDAO().getAllTracker();
 		
+		HashSet<String> set = (HashSet<String>)OrdineDAOFactory.getOrdineDAO().getAllTracker();
 		String random = "SP"+(int)(Math.random()*((999-100)+1))+1;
 		while(set.contains(random)) {
 			random = "SP"+(int)(Math.random()*((999-100)+1))+1;
 		}
+		
 		ordine.setTracking(random);
 		if((Carta)request.getSession().getAttribute("cartaScelta") ==null) {
 			ordine.setTipoPagamento(0); //pagamento contanti
+			ordine.setCarta(null);
 			
 		}else {ordine.setTipoPagamento(1);} //pagamento con carta
 		if((Indirizzo)request.getSession().getAttribute("indirizzoScelto")==null) {
 			ordine.setTipoOrdine(0); //asporto
+			ordine.setIndirizzo(null);
 		}else {
 			ordine.setTipoOrdine(1); //consegna a casa
 		}
@@ -103,6 +110,38 @@ public class OrdineServlet extends HttpServlet {
 			request.getSession().removeAttribute("ristoranteScelto");
 			response.setStatus(HttpServletResponse.SC_OK);
 		}
+	}else if(request.getParameter("method") != null && request.getParameter("method").equals("getByTracker")) {
+		String tracker = (String) request.getParameter("tracker");
+		Ordine o = OrdineDAOFactory.getOrdineDAO().getOrdineByTracker(tracker);
+		System.out.println(new Gson().toJson(o));
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(o));
+		response.setStatus(HttpServletResponse.SC_OK);
+	}else if(request.getParameter("method") != null && request.getParameter("method").equals("getDetailReview")) {
+		int idOrdine = Integer.parseInt(request.getParameter("ordine"));
+		Recensione r = RecensioneDAOFactory.getRecensioneDAO().getRecensione(idOrdine);
+		System.out.println(new Gson().toJson(r));
+		if(r!=null) {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(r));
+			response.setStatus(HttpServletResponse.SC_OK);
+		}else {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+	}else if(request.getParameter("method") != null && request.getParameter("method").equals("sendReview")) {
+		int idOrdine = Integer.parseInt(request.getParameter("ordine"));
+		String commento = (String) request.getParameter("commento");
+		int stelle = Integer.parseInt(request.getParameter("stelle"));
+		Recensione r = new Recensione(commento, stelle, idOrdine, new Date(System.currentTimeMillis()));
+		if(RecensioneDAOFactory.getRecensioneDAO().inserisciRecensione(idOrdine, r) !=null){
+			response.setStatus(HttpServletResponse.SC_OK);
+			
+		}else {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+
 	}else {
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}

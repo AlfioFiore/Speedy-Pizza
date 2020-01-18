@@ -129,24 +129,20 @@ function logout() {
 }
 $("#btnControllaOrdine").on('click', function(event) {
 	$.ajax({
-		url : 'TrackerServlet',
+		url : 'OrdineServlet',
 		type: "POST",
 		dataType: 'json',
 		data : {
-			noord : $('#noord').val(),
+			method: "getByTracker",
+			tracker : $('#noord').val()
 		},
 		success : function(result) {
 			$("#noord").removeClass("is-invalid");
 			var state;
 			var txt = "<div class='col-xl-12'>";
-			txt += '<h2>Ordine n.' + result.id + '</h2>';
-			txt += "<div class=\"progress\" style=\"height: 4vh; width: 60%; margin:auto; margin-bottom: 4vh;\"> <div class=\"progress-bar progress-bar-striped bg-warning\" role=\"progressbar\" style=\"width: " + result.state +"%\" aria-valuenow=\"" + result.state + "\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div></div>";	
-			if (result.state == 0) state = "Stato inviato";
-			else if (result.state == 25) state = "Stato ricevuto";
-			else if (result.state == 50) state = "In preparazione";
-			else if (result.state == 75) state = "In consegna";
-			else if (result.state == 100) state = "Stato consegnato";
-			txt += '<h3>Il tuo ordine &egrave; <b>' + state + '</b></h3>';
+			txt += '<h2>Ordine n.' + result.id+ '</h2>';
+			
+			txt += '<h3>Il tuo ordine &egrave; in <b>' + result.stato + '</b></h3>';
 			txt += '</div>';
 			$(".div-tracker").hide().html(txt).fadeIn('500');		 
 		},
@@ -581,15 +577,15 @@ function confermaOrdine() {
 function showReview(where, restaurant) {
 	$("#modalOrder").modal('show');
 	$.ajax({
-		url : 'OrderServlet',
+		url : 'OrdineServlet',
 		type: "POST",
 		data : {
 			method : 'getDetailReview',
 			ordine : where
 		},
 		success : function(result) {
-			$("#modalOrderTitle").html("Recensione - ordine n."+result.ordine)
-			$("#modalOrder .modal-body").html("Hai gia' lasciato una recensione: <br>\""+result.recensione+"\"");
+			$("#modalOrderTitle").html("Recensione - ordine n."+result.idOrdine)
+			$("#modalOrder .modal-body").html("Hai gia' lasciato una recensione: <br>\""+result.commento+"\"");
 			$("#modalOrder .modal-footer").html("");
 		}, 
 		error : function(result) {
@@ -616,7 +612,7 @@ function showReview(where, restaurant) {
 }
 function sendReview(ordine, risto) {
 	$.ajax({
-		url : 'OrderServlet',
+		url : 'OrdineServlet',
 		type: "POST",
 		data : {
 			method : 'sendReview',

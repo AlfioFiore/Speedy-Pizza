@@ -17,7 +17,7 @@
 	
 		<%@ include file = "header.jsp" %>
 	
-		<div id="contenutoPagina">
+	<div id="contenutoPagina">
 	<div class="row div-tracker">
 		<div class="col-xl-12">
 			<h2>Scopri subito se il tuo ordine è pronto con un semplice click</h2>
