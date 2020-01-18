@@ -2,6 +2,8 @@ package controller.GestoreOrdini;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,8 +75,13 @@ public class OrdineServlet extends HttpServlet {
 		String partitaIva = (String) request.getSession().getAttribute("ristoranteScelto");
 		Pizzeria pizzeria = PizzeriaDAOFactory.getPizzeriaDAO().getPizzeriaByIva(partitaIva);
 		ordine.setPizzeria(pizzeria);
+		HashSet<String> set = (HashSet<String>)OrdineDAOFactory.getOrdineDAO().getAllTracker();
 		
-
+		String random = "SP"+(int)(Math.random()*((999-100)+1))+1;
+		while(set.contains(random)) {
+			random = "SP"+(int)(Math.random()*((999-100)+1))+1;
+		}
+		ordine.setTracking(random);
 		if((Carta)request.getSession().getAttribute("cartaScelta") ==null) {
 			ordine.setTipoPagamento(0); //pagamento contanti
 			
@@ -87,6 +94,7 @@ public class OrdineServlet extends HttpServlet {
 		ordine.setData(new Date(System.currentTimeMillis()));
 		ordine.setStato("Elaborazione ordine");
 		ordine.setTotale(ordine.getCarrello().getTotale());
+		
 		if(OrdineDAOFactory.getOrdineDAO().inserisciOrdine(ordine)!=null) {
 			
 			request.getSession().removeAttribute("cartaScelta");

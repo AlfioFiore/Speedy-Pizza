@@ -35,6 +35,8 @@ public class OrdineDAOImpl implements OrdineDAO {
 	private static final String GET_BY_CLIENTE="select * from ordine where id_cliente = ?";
 	private static final String GET_BY_PIZZERIA="select * from ordine where id_pizzeria = ?";
 	private static final String GET_BY_TRACKER="select * from ordine where tracker = ?";
+	private static final String GET_TRACKER="select tracker from ordine";
+
 	private static final String GET_BY_FATTORINO="select * from ordine where id_fattorino =? ";
 	/*query per prendere i dati complessi di un ordine*/
 	private static final String GET_CARTA ="select * from carta where numero_carta = ?";
@@ -324,6 +326,36 @@ public class OrdineDAOImpl implements OrdineDAO {
 			}
 		}
 		return o;
+	}
+	@Override
+	public Collection<String> getAllTracker() {
+		ResultSet result=null;
+		Connection connection =null;
+		HashSet<String> set;
+		try {				
+			connection = DriverManagerConnectionPool.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(OrdineDAOImpl.GET_TRACKER);
+			
+			
+			result = preparedStatement.executeQuery();
+			set = new HashSet<String>();
+			while(result.next()) {
+					set.add(result.getString(1));
+				}
+			
+		}catch (Exception e) {
+			System.out.println("Errore durante la connessione." + e.getMessage());
+
+			return null;
+		}finally {
+			try {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			} catch (SQLException e) {
+				System.out.println("Errore durante la connessione." + e.getMessage());
+				return null;
+			}
+		}
+		return set;
 	}
 	private static Indirizzo getIndirizzo(int idIndirizzo) {
 		ResultSet result=null;

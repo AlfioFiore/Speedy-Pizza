@@ -12,4 +12,5 @@ public interface OrdineDAO {
 	public Collection<Ordine> getOrdiniByPizzeria(String idPizzeria);
 	public Ordine getOrdineByTracker(String tracker);
 	public Collection<Ordine> getOrdiniByFattorino(String idFattorino);
+	public Collection<String> getAllTracker();
 }
