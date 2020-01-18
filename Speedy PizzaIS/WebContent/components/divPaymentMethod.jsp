@@ -18,7 +18,7 @@
 					<div class="card card-interna">
 					
 						<div class="card-body">				
-							<p>Carta: <%=carta.toString() %></p>
+							<p>Carta: <%=carta.getNumeroCarta() %></p>
 					
 						</div>
 					</div>

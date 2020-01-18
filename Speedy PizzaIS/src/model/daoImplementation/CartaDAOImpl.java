@@ -53,8 +53,9 @@ public class CartaDAOImpl implements CartaDAO{
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			PreparedStatement statement = connection.prepareStatement(CartaDAOImpl.DELETE);
-			statement.setString(1, carta.getNumeroCarta());
 			
+			statement.setString(1, carta.getNumeroCarta());
+			statement.execute("SET FOREIGN_KEY_CHECKS=0");
 			return (statement.executeUpdate()>0) ? true:false;
 		}catch (Exception e) {
 			System.out.println("Errore durante la connessione." + e.getMessage());
