@@ -55,6 +55,7 @@ primary key(numero_carta)
 	starring int not null,
 	recensione varchar(100) not null,
     date date not null,
+    id_ordine int not null,
     primary key (id)
 );
  create table ordine(
@@ -70,7 +71,7 @@ primary key(numero_carta)
  id_recensione int,
  id_carta varchar(40),
  id_fattorino varchar(40),
- numero_ordine int(11) null,
+ numero_ordine int(11) not null auto_increment,
  tracker varchar(45),
  
  primary key(id),
