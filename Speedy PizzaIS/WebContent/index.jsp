@@ -42,11 +42,8 @@
 		</div>
 		<div class="col-xl-1"></div>
 	</div>
-	<div class="row div-mappa">
-		<h1>Scopri i nostri punti vendita</h1>
-		<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1ooNLubr74YVawAeDC-L4zDcmEh5J0UEn" style="width: 80vw; height: 60vh;">
-		</iframe>
-	</div>
+	
+	
 	</div>
 	
 	<%@ include file = "footer.jsp" %>
