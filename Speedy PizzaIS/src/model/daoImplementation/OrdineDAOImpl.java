@@ -27,7 +27,7 @@ import model.beans.Utente;
 import model.daoInterface.OrdineDAO;
 
 public class OrdineDAOImpl implements OrdineDAO {
-	private static final String INSERT_ORDINE="insert into ordine values(null,?,?,?,?,?,?,?,?,null,?,null,null,null)";
+	private static final String INSERT_ORDINE="insert into ordine values(null,?,?,?,?,?,?,?,?,null,?,null,null,?)";
 	private static final String INSERT_CONTENUTO_ORDINE="insert into contenuto_ordine values(?,?,?,?,?)";
 	private static final String GETID="Select  LAST_INSERT_ID();";
 
@@ -118,6 +118,7 @@ public class OrdineDAOImpl implements OrdineDAO {
 			statement.setString(7, ordine.getPizzeria().getPartitaIva());
 			statement.setInt(8, ordine.getIndirizzo().getIdIndirizzo());
 			statement.setString(9, ordine.getCarta().getNumeroCarta());
+			statement.setString(10, ordine.getTracking());
 			flag1 = (statement.executeUpdate()>0) ? true:false;
 			if (flag1) {
 				statement = connection.prepareStatement(OrdineDAOImpl.GETID);
