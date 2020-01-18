@@ -114,7 +114,7 @@ foreign key(id_pizzeria) references pizzeria(partita_iva) on update cascade on d
  create table richiesta_affiliazione(
  id_richiesta int auto_increment not null,
  nome_pizzeria varchar(30) not null,
- commento varchar(30) not null,
+ commento varchar(320) not null,
  data date not null,
  stato varchar(30) not null,
  telefono varchar(30) not null,
@@ -130,9 +130,9 @@ ALTER TABLE utente add foreign key(pizzeria_fattorino) references pizzeria(parti
 ALTER TABLE indirizzo add foreign key (utente) references utente(email) on update cascade on delete cascade;
 
 INSERT INTO `categoria` (`nome`, `iva`) VALUES ('Bevanda',10),('Dolce',10),('Frittura',4),('Pizza ',10);
-INSERT INTO `indirizzo` (`id`, `via`, `citta`, `cap`, `civico`, `utente`) VALUES (1,'DI NAPOLI','nAPOLI','84572','26',NULL);
-INSERT INTO `utente` (`nome`, `cognome`, `email`, `pass`, `telefono`, `data_registrazione`, `tipo`, `pizzeria_fattorino`) VALUES ('pinco','pallino','fiorentino.alfo@gmail.com','123456','3333333333','2019-12-29 23:00:00',1,NULL),('Alfonso','Fiorentino','gestore@gestore.com','123456','1234567894','2019-12-30 17:08:00',3,NULL);
-INSERT INTO `richiesta_affiliazione` (`id_richiesta`, `nome_pizzeria`, `commento`, `data`, `stato`, `telefono`, `partita_iva`, `cognome`, `nome`, `email`, `pass`) VALUES (1,'da pallino','Beh, da pinco pallino','2019-12-30','Accettata','3333333333','12345678910','pallino','pinco','fiorentino.alfo@gmail.com','123456');
-INSERT INTO `pizzeria` (`partita_iva`, `nome`, `orario_apertura`, `orario_chiusura`, `giorni_apertura`, `indirizzo`, `titolare`, `iban`, `descrizione`, `telefono`) VALUES ('12345678910','da CAIO','01:00:00','23:59:00','lun+mar+mer+gio+ven+sab',1,'fiorentino.alfo@gmail.com','123456789',NULL,'3333333333');
+INSERT INTO `indirizzo` (`id`, `via`, `citta`, `cap`, `civico`, `utente`) VALUES (1,'DI NAPOLI','Salerno','84572','26',NULL);
+INSERT INTO `utente` (`nome`, `cognome`, `email`, `pass`, `telefono`, `data_registrazione`, `tipo`, `pizzeria_fattorino`) VALUES ('pinco','pallino','ristoranteeuropa@gmail.com','prova1','3333333333','2019-12-29 23:00:00',1,NULL),('Alfonso','Fiorentino','gestore@gestore.com','12345a','1234567894','2019-12-30 17:08:00',3,NULL), ('Pippo','Fiorentino','pippo5@gmail.com','prova33','1234567894','2019-12-30 17:08:00',2,NULL), ('Pippo','Pippo2','pippo@gmail.com','prova1','1234567894','2019-12-30 17:08:00',0,NULL);
+INSERT INTO `richiesta_affiliazione` (`id_richiesta`, `nome_pizzeria`, `commento`, `data`, `stato`, `telefono`, `partita_iva`, `cognome`, `nome`, `email`, `pass`) VALUES (1,'da pallino','Beh, da pinco pallino','2019-12-30','Accettata','3333333333','12345678910','pallino','pinco','fiorentino.alfo@gmail.com','12345a');
+INSERT INTO `pizzeria` (`partita_iva`, `nome`, `orario_apertura`, `orario_chiusura`, `giorni_apertura`, `indirizzo`, `titolare`, `iban`, `descrizione`, `telefono`) VALUES ('12345678910','Regina','01:00:00','23:59:00','lun+mar+mer+gio+ven+sab',1,'ristoranteeuropa@gmail.com','123456789',NULL,'3333333333');
 INSERT INTO `prodotto` (`nome`, `prezzo`, `disponibilita`, `id_categoria`, `ingredienti`, `id_pizzeria`) VALUES ('Margherita',6.2,'si','Pizza ','oLIO, POMODORO, MOZZARELLA','12345678910'),('Torta cioccolato',5.22,'si','Dolce','Cioccolato, latte','12345678910'); 
-INSERT INTO `utente` (`nome`, `cognome`, `email`, `pass`, `telefono`, `data_registrazione`, `tipo`, `pizzeria_fattorino`) VALUES ('Luca','Fattorino','fattorino@fattorino.it','123456','1234567890','2019-12-30 23:00:00',2,'12345678910');
+INSERT INTO `utente` (`nome`, `cognome`, `email`, `pass`, `telefono`, `data_registrazione`, `tipo`, `pizzeria_fattorino`) VALUES ('Luca','Fattorino','fattorino@fattorino.it','12345a','1234567890','2019-12-30 23:00:00',2,'12345678910');

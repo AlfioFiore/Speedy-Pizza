@@ -165,14 +165,14 @@
 				<div class="modal-body" style="color: #333333;">
 					<div class="form-group">
 						<label for="nome">Nome</label>
-						<input type="text" value="" class="form-control" id="nomeProd" aria-describedby="emailHelp">
+						<input type="text" value="" class="form-control" id="nomeProd" pattern="[a-zA-z ]{2,19}" aria-describedby="emailHelp" required>
 						<div class="invalid-feedback">
         					Nome errato
       					</div>
 					</div>
 					<div class="form-group">
 						<label for="nome">Ingredienti</label>
-						<input type="text" value="" class="form-control" id="ingred" aria-describedby="emailHelp">
+						<input type="text" value="" class="form-control" id="ingred" aria-describedby="emailHelp" pattern="^[a-zA-Z,. ]{3,99}" required>
 						<div class="invalid-feedback">
         					Nome errato
       					</div>
@@ -180,7 +180,7 @@
 					
 					<div class="form-group">
 						<label for="createCat">Categoria</label>
-						<select id="cat">
+						<select id="cat" required>
 					<%
 						HashSet<Categoria> cate = (HashSet)CategoriaDAOFactory.getCategoriaDAO().getCategorie();
 	
@@ -201,7 +201,7 @@
 					
 					<div class="form-group">
 						<label for="prezzo">Prezzo</label>
-						<input type="number" step="0.01"class="form-control" id="prezzo" aria-describedby="emailHelp">
+						<input type="number" step="0.01"class="form-control" id="prezzo" aria-describedby="emailHelp" pattern="[0-9]{0.01,}" required>
 						<div class="invalid-feedback">
         					Non valido.
       					</div>
@@ -233,21 +233,21 @@
 				<div class="modal-body" style="color: #333333;">
 					<div class="form-group">
 						<label for="nome">Nome</label>
-						<input type="text" value="" class="form-control" id="nomeFattorino" aria-describedby="emailHelp">
+						<input type="text" value="" class="form-control" id="nomeFattorino" aria-describedby="emailHelp" pattern="[a-zA-z]{2,19}" required>
 						<div class="invalid-feedback">
         					Nome errato
       					</div>
 					</div>
 					<div class="form-group">
 						<label for="nome">Cognome</label>
-						<input type="text" value="" class="form-control" id="cognomeFattorino" aria-describedby="emailHelp">
+						<input type="text" value="" class="form-control" id="cognomeFattorino" aria-describedby="emailHelp" pattern="[a-zA-z]{2,29}" required>
 						<div class="invalid-feedback">
         					Cognome errato
       					</div>
 					</div>
 					<div class="form-group">
 						<label for="nome">Email</label>
-						<input type="text" value="" class="form-control" id="emailFattorino" aria-describedby="emailHelp">
+						<input type="text" value="" class="form-control" id="emailFattorino" aria-describedby="emailHelp" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
 						<div class="invalid-feedback">
         					Email errato
       					</div>
@@ -255,7 +255,7 @@
 					
 					<div class="form-group">
 						<label for="nome">Telefono</label>
-						<input type="text" value="" class="form-control" id="telefonoFattorino" aria-describedby="emailHelp">
+						<input type="text" value="" class="form-control" id="telefonoFattorino" aria-describedby="emailHelp" pattern="[0-9]{9,14}" required>
 						<div class="invalid-feedback">
         					Telefono errato
       					</div>
